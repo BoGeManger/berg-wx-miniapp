@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.berg.dao.system.sys.mapper.RoleTblMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.berg.dao.system.sys.entity.RoleTbl">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="remark" property="remark" />
+        <result column="create_time" property="createTime" />
+        <result column="create_user" property="createUser" />
+        <result column="modify_time" property="modifyTime" />
+        <result column="modify_user" property="modifyUser" />
+        <result column="del_time" property="delTime" />
+        <result column="del_user" property="delUser" />
+        <result column="isdel" property="isdel" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, remark, create_time, create_user, modify_time, modify_user, del_time, del_user, isdel
+    </sql>
+
+    <select id="listUserRoleName" resultType="java.lang.String">
+        SELECT DISTINCT r.name
+        FROM sys_role_tbl r
+             LEFT JOIN sys_user_role_tbl ur ON r.id = ur.role_id
+             LEFT JOIN sys_user_tbl u ON u.id = ur.user_id
+        WHERE ur.isdel = 0 AND r.isdel = 0 AND u.isdel = 0 AND u.username = #{userName}
+    </select>
+</mapper>

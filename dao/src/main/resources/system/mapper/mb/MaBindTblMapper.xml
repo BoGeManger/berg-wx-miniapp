@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.berg.dao.system.mb.mapper.MaBindTblMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.berg.dao.system.mb.entity.MaBindTbl">
+        <id column="id" property="id" />
+        <result column="app_id" property="appId" />
+        <result column="union_id" property="unionId" />
+        <result column="open_id" property="openId" />
+        <result column="member_id" property="memberId" />
+        <result column="nick_name" property="nickName" />
+        <result column="avatar_url" property="avatarUrl" />
+        <result column="gender" property="gender" />
+        <result column="country" property="country" />
+        <result column="province" property="province" />
+        <result column="city" property="city" />
+        <result column="language" property="language" />
+        <result column="create_time" property="createTime" />
+        <result column="modify_time" property="modifyTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, app_id, union_id, open_id, member_id, nick_name, avatar_url, gender, country, province, city, language, create_time, modify_time
+    </sql>
+
+</mapper>

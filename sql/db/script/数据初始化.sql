@@ -1,0 +1,2 @@
+-- 初始化超级管理员
+INSERT INTO `miniapp`.`sys_user_tbl`( `username`, `password`, `realname`, `organization_id`, `organization_name`, `last_login_time`, `lock_time`, `lock_user`, `islock`, `create_time`, `create_user`, `modify_time`, `modify_user`, `del_time`, `del_user`, `isdel`) VALUES ( 'admin', 'e10adc3949ba59abbe56e057f20f883e', '系统管理员', 0, NULL, '2020-06-10 11:17:15', NULL, NULL, 0, '2020-06-10 11:16:57', 'system', '2020-06-10 11:17:03', 'system', NULL, NULL, 00000);
