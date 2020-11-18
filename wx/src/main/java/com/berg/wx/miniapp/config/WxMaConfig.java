@@ -5,7 +5,9 @@ import cn.binarywang.wx.miniapp.api.impl.WxMaServiceImpl;
 import cn.binarywang.wx.miniapp.config.impl.WxMaDefaultConfigImpl;
 import cn.binarywang.wx.miniapp.config.impl.WxMaRedisBetterConfigImpl;
 import com.berg.wx.miniapp.properties.WxMaProperties;
+import com.berg.wx.miniapp.service.WxMaExtendService;
 import com.berg.wx.miniapp.service.WxMaMessageRouterService;
+import com.berg.wx.miniapp.service.impl.WxMaExtendServiceImpl;
 import com.berg.wx.miniapp.utils.WxMaUtil;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.redis.RedisTemplateWxRedisOps;
@@ -51,6 +53,9 @@ public class WxMaConfig {
                     if(wxMaMessageRouterService!=null){
                         WxMaUtil.routers.put(a.getAppId(),wxMaMessageRouterService.createRouter(service));
                     }
+                    //自定义扩展实现
+                    WxMaExtendService wxMaExtendService = new WxMaExtendServiceImpl(service);
+                    WxMaUtil.extendService.put(a.getAppId(),wxMaExtendService);
                     return service;
                 }).collect(Collectors.toMap(s -> s.getWxMaConfig().getAppid(), a -> a));
     }
