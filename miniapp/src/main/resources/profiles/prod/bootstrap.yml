@@ -96,7 +96,7 @@ minio:
   bucketName: master
 
 shiro:
-  urls: /**/doc.html/**,/**/swagger-resources/**,/**/v2/**,/**/webjars/**,/**/druid/**,/**/actuator/**,/miniapp/login/login
+  urls: /**/doc.html/**,/**/swagger-resources/**,/**/v2/**,/**/webjars/**,/**/druid/**,/**/actuator/**,/miniapp/login/login,/miniapp/portal/**
   expireTime: 180
 
 wx:
