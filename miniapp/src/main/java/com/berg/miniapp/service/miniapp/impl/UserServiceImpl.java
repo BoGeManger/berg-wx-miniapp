@@ -5,6 +5,7 @@ import cn.binarywang.wx.miniapp.bean.WxMaPhoneNumberInfo;
 import com.berg.exception.FailException;
 import com.berg.exception.ParamException;
 import com.berg.miniapp.auth.JWTUtil;
+import com.berg.miniapp.service.base.BaseService;
 import com.berg.miniapp.service.miniapp.UserService;
 import com.berg.vo.miniapp.in.MaSetUserInfoInVo;
 import com.berg.vo.miniapp.in.MaUserPhoneInVo;
@@ -14,10 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserServiceImpl implements UserService {
-
-    @Autowired
-    JWTUtil jWTUtil;
+public class UserServiceImpl extends BaseService implements UserService {
 
     @Autowired
     UserAsyncTask userAsyncTask;

@@ -6,6 +6,7 @@ import cn.binarywang.wx.miniapp.bean.WxMaSubscribeMessage;
 import com.berg.constant.RedisKeyConstants;
 import com.berg.exception.FailException;
 import com.berg.miniapp.auth.JWTUtil;
+import com.berg.miniapp.service.base.BaseService;
 import com.berg.miniapp.service.miniapp.SubscribeMessageService;
 import com.berg.vo.miniapp.MaTemplateInfoVo;
 import com.berg.vo.miniapp.in.MaSendTemplateInVo;
@@ -21,10 +22,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Service
-public class SubscribeMessageServiceImpl implements SubscribeMessageService {
-
-    @Autowired
-    JWTUtil jWTUtil;
+public class SubscribeMessageServiceImpl extends BaseService implements SubscribeMessageService {
 
     @Resource
     RedisTemplate<String, MaTemplateInfoVo> redisTemplate;
@@ -38,7 +36,7 @@ public class SubscribeMessageServiceImpl implements SubscribeMessageService {
     public List<MaTemplateInfoVo> getTemplateList() {
         List<MaTemplateInfoVo> list = redisTemplate.opsForList().range("list", 0, -1);
         if (list.size() == 0) {
-            String appId = jWTUtil.getAppId();
+            String appId = getAppId();
             try {
                 WxMaService wxService = WxMaUtil.getService(appId);
                 List<WxMaSubscribeService.TemplateInfo> templateList = wxService.getSubscribeService().getTemplateList();

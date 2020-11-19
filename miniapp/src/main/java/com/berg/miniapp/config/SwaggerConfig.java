@@ -35,12 +35,16 @@ public class SwaggerConfig {
     @Bean
     public Docket customImplementation() {
         ParameterBuilder ticketPar = new ParameterBuilder();
+        ParameterBuilder ticketPar1 = new ParameterBuilder();
         List<Parameter> pars = new ArrayList<Parameter>();
-        ticketPar.name("token").description("登录校验")//name表示名称，description表示描述
+        ticketPar.name("token").description("登录校验")
                 .modelRef(new ModelRef("string")).parameterType("header")
-                .required(true).build();//required表示是否必填，defaultvalue表示默认值
-        pars.add(ticketPar.build());//添加完此处一定要把下边的带***的也加上否则不生效
-
+                .required(true).build();
+        ticketPar1.name("appId").description("微信小程序唯一标识")
+                .modelRef(new ModelRef("string")).parameterType("header")
+                .required(true).build();
+        pars.add(ticketPar.build());
+        pars.add(ticketPar1.build());
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()

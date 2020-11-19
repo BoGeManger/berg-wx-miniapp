@@ -4,6 +4,7 @@ import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaCodeLineColor;
 import com.berg.exception.FailException;
 import com.berg.miniapp.auth.JWTUtil;
+import com.berg.miniapp.service.base.BaseService;
 import com.berg.miniapp.service.miniapp.QRCodeService;
 import com.berg.utils.JsonHelper;
 import com.berg.vo.miniapp.in.MaCreateQRCodeInVo;
@@ -14,10 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class QRCodeServiceImpl implements QRCodeService {
-
-    @Autowired
-    JWTUtil jWTUtil;
+public class QRCodeServiceImpl extends BaseService implements QRCodeService {
 
     /**
      * 获取小程序二维码,永久有效,有数量限制
@@ -27,7 +25,7 @@ public class QRCodeServiceImpl implements QRCodeService {
     @Override
     public byte[] createQRCode(MaCreateQRCodeInVo input){
         byte[] file = null;
-        String appId = jWTUtil.getAppId();
+        String appId = getAppId();
         try {
             WxMaService wxService = WxMaUtil.getService(appId);
             file = wxService.getQrcodeService().createQrcodeBytes(input.getPath(),input.getWidth());
@@ -45,7 +43,7 @@ public class QRCodeServiceImpl implements QRCodeService {
     @Override
     public byte[]  get(MaQRCodeGetInVo input){
         byte[]  file = null;
-        String appId = jWTUtil.getAppId();
+        String appId = getAppId();
         try {
             WxMaService wxService = WxMaUtil.getService(appId);
             WxMaCodeLineColor wxMaCodeLineColor = JsonHelper.fromJson(input.getLineColor(),WxMaCodeLineColor.class,null);
@@ -64,7 +62,7 @@ public class QRCodeServiceImpl implements QRCodeService {
     @Override
     public byte[]  getUnlimited(MaQRCodeGetUnlimitedInVo input){
         byte[]  file = null;
-        String appId = jWTUtil.getAppId();
+        String appId = getAppId();
         try {
             WxMaService wxService = WxMaUtil.getService(appId);
             WxMaCodeLineColor wxMaCodeLineColor = JsonHelper.fromJson(input.getLineColor(),WxMaCodeLineColor.class,null);

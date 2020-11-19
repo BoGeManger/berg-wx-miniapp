@@ -3,6 +3,7 @@ package com.berg.miniapp.service.miniapp.impl;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import com.berg.exception.FailException;
 import com.berg.miniapp.auth.JWTUtil;
+import com.berg.miniapp.service.base.BaseService;
 import com.berg.miniapp.service.miniapp.CvImgService;
 import com.berg.vo.miniapp.out.MaAiCropOutVo;
 import com.berg.vo.miniapp.out.MaScanQRCodeOutVo;
@@ -19,10 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 
 @Service
-public class CvImgServiceImpl implements CvImgService {
-
-    @Autowired
-    JWTUtil jWTUtil;
+public class CvImgServiceImpl extends BaseService implements CvImgService {
 
     /**
      * 图片智能裁剪
@@ -31,7 +29,7 @@ public class CvImgServiceImpl implements CvImgService {
     @Override
     public MaAiCropOutVo aiCrop(MultipartFile multipartFile){
         MaAiCropOutVo result = new MaAiCropOutVo();
-        String appId = jWTUtil.getAppId();
+        String appId = getAppId();
         File file = null;
         try {
             WxMaService wxService = WxMaUtil.getService(appId);
@@ -57,7 +55,7 @@ public class CvImgServiceImpl implements CvImgService {
     @Override
     public MaScanQRCodeOutVo scanQRCode(MultipartFile multipartFile){
         MaScanQRCodeOutVo result = new MaScanQRCodeOutVo();
-        String appId = jWTUtil.getAppId();
+        String appId = getAppId();
         File file = null;
         try {
             WxMaService wxService = WxMaUtil.getService(appId);
@@ -83,7 +81,7 @@ public class CvImgServiceImpl implements CvImgService {
     @Override
     public MaSuperresolutionOutVo superresolution(MultipartFile multipartFile){
         MaSuperresolutionOutVo result = new MaSuperresolutionOutVo();
-        String appId = jWTUtil.getAppId();
+        String appId = getAppId();
         File file = null;
         try {
             WxMaService wxService = WxMaUtil.getService(appId);

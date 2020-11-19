@@ -9,6 +9,7 @@ import com.berg.exception.FailException;
 import com.berg.miniapp.auth.JWTToken;
 import com.berg.miniapp.auth.JWTUtil;
 import com.berg.miniapp.constant.MiniappConstants;
+import com.berg.miniapp.service.base.BaseService;
 import com.berg.miniapp.service.miniapp.LoginService;
 import com.berg.utils.DesUtil;
 import com.berg.vo.miniapp.MaUserInfoVo;
@@ -21,13 +22,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LoginServiceImpl implements LoginService {
+public class LoginServiceImpl extends BaseService implements LoginService{
 
     @Autowired
     MiniappConstants miniappConstants;
-
-    @Autowired
-    JWTUtil jWTUtil;
 
     @Autowired
     LoginAsyncTask loginAsyncTask;

@@ -2,21 +2,17 @@ package com.berg.miniapp.service.miniapp.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import com.berg.exception.FailException;
-import com.berg.miniapp.auth.JWTUtil;
+import com.berg.miniapp.service.base.BaseService;
 import com.berg.miniapp.service.miniapp.CheckService;
 import com.berg.vo.miniapp.in.MaMsgSecCheckInVo;
 import com.berg.wx.miniapp.utils.WxMaUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 
 @Service
-public class CheckServiceImpl implements CheckService {
-
-    @Autowired
-    JWTUtil jWTUtil;
+public class CheckServiceImpl extends BaseService implements CheckService {
 
     /**
      * 校验图片是否含有违法违规内容
@@ -26,7 +22,7 @@ public class CheckServiceImpl implements CheckService {
     @Override
     public Boolean imgSecCheck(MultipartFile multipartFile){
         Boolean flag = true;
-        String appId = jWTUtil.getAppId();
+        String appId = getAppId();
         File file = null;
         try {
             WxMaService wxService = WxMaUtil.getService(appId);
@@ -51,7 +47,7 @@ public class CheckServiceImpl implements CheckService {
     @Override
     public Boolean msgSecCheck(MaMsgSecCheckInVo input){
         Boolean flag = true;
-        String appId = jWTUtil.getAppId();
+        String appId = getAppId();
         try {
             WxMaService wxService = WxMaUtil.getService(appId);
             flag = wxService.getSecCheckService().checkMessage(input.getContent());
