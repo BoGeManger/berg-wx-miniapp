@@ -37,7 +37,7 @@ public class SwaggerConfig {
         ParameterBuilder ticketPar = new ParameterBuilder();
         ParameterBuilder ticketPar1 = new ParameterBuilder();
         List<Parameter> pars = new ArrayList<Parameter>();
-        ticketPar.name("token").description("登录校验")
+        ticketPar.name("token").description("请求校验")
                 .modelRef(new ModelRef("string")).parameterType("header")
                 .required(true).build();
         ticketPar1.name("appId").description("微信小程序唯一标识")

@@ -41,9 +41,8 @@ public class LoginServiceImpl extends BaseService implements LoginService{
     @Override
     public MaLoginOutVo login(MaLoginInVo input){
         String appId = getAppId();
-        WxMaJscode2SessionResult session = new WxMaJscode2SessionResult();
         //调用小程序接口
-        session = getSession(appId,input.getCode());
+        WxMaJscode2SessionResult session = getSession(appId,input.getCode());
         MaLoginOutVo result = setMaLoginOutVo(appId,session.getOpenid(),session.getUnionid(),session.getSessionKey());
         //生成JWT
         JWTToken jwtToken = getJwt(result);

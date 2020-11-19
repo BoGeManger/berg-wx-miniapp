@@ -23,19 +23,19 @@ public class LoginController extends BaseController {
     @Autowired
     LoginService loginService;
 
-    @ApiOperation(value = "小程序登录",notes = "生成登录授权并返回最新用户信息")
+    @ApiOperation(value = "小程序登录",notes = "生成请求校验并返回最新用户信息,前端未存在请求校验时调用")
     @PostMapping(value = "login")
     public Result<MaLoginOutVo> login(@RequestBody @Validated MaLoginInVo input){
         return getSuccessResult("请求成功",loginService.login(input));
     }
 
-    @ApiOperation(value = "刷新登录校验",notes = "刷新登录授权并返回最新用户信息,新用户code必填,旧用户sessionKey过期code必填")
+    @ApiOperation(value = "刷新请求校验",notes = "刷新请求校验并返回最新用户信息,新用户code必填,旧用户sessionKey过期code必填，前端存在请求校验时调用")
     @PostMapping(value = "refresh")
     public Result<MaLoginOutVo> refresh(@RequestBody @Validated MaRefreshInVo input){
         return getSuccessResult("请求成功",loginService.refresh(input));
     }
 
-    @ApiOperation(value = "小程序退出登录",notes = "删除缓存登录授权")
+    @ApiOperation(value = "小程序退出登录",notes = "删除缓存请求校验")
     @PostMapping(value = "logout")
     public Result<Boolean> logout(){
         loginService.logout();

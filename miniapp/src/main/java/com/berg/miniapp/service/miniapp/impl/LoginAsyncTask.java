@@ -31,7 +31,7 @@ public class LoginAsyncTask {
      * @param unionId
      */
     @Async
-    public Integer addMaBind(String appId, String openId, String unionId) {
+    public void addMaBind(String appId, String openId, String unionId) {
         LocalDateTime now = LocalDateTime.now();
         MaBindTbl maBindTbl = new MaBindTbl();
         maBindTbl.setAppId(appId);
@@ -40,7 +40,6 @@ public class LoginAsyncTask {
         maBindTbl.setCreateTime(now);
         maBindTbl.setModifyTime(now);
         maBindTblDao.save(maBindTbl);
-        return maBindTbl.getId();
     }
 
     /**
