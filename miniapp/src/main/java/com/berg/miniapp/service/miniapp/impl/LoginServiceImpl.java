@@ -40,10 +40,11 @@ public class LoginServiceImpl extends BaseService implements LoginService{
      */
     @Override
     public MaLoginOutVo login(MaLoginInVo input){
+        String appId = getAppId();
         WxMaJscode2SessionResult session = new WxMaJscode2SessionResult();
         //调用小程序接口
-        session = getSession(input.getAppId(),input.getCode());
-        MaLoginOutVo result = setMaLoginOutVo(input.getAppId(),session.getOpenid(),session.getUnionid(),session.getSessionKey());
+        session = getSession(appId,input.getCode());
+        MaLoginOutVo result = setMaLoginOutVo(appId,session.getOpenid(),session.getUnionid(),session.getSessionKey());
         //生成JWT
         JWTToken jwtToken = getJwt(result);
         //生成token缓存信息
@@ -59,10 +60,11 @@ public class LoginServiceImpl extends BaseService implements LoginService{
      */
     @Override
     public MaLoginOutVo refresh(MaRefreshInVo input){
+        String appId = getAppId();
         WxMaJscode2SessionResult session = new WxMaJscode2SessionResult();
         if(StringUtils.isNotBlank(input.getCode())){
             //调用小程序接口
-            session = getSession(input.getAppId(),input.getCode());
+            session = getSession(appId,input.getCode());
         }else{
             //删除已有token缓存信息
             loginAsyncTask.delTokenCache(jWTUtil.getToken());
@@ -70,7 +72,7 @@ public class LoginServiceImpl extends BaseService implements LoginService{
             session.setOpenid(jWTUtil.getOpenId());
             session.setUnionid(jWTUtil.getUnionId());
         }
-        MaLoginOutVo result = setMaLoginOutVo(input.getAppId(),session.getOpenid(),session.getUnionid(),session.getSessionKey());
+        MaLoginOutVo result = setMaLoginOutVo(appId,session.getOpenid(),session.getUnionid(),session.getSessionKey());
         //生成JWT
         JWTToken jwtToken = getJwt(result);
         //生成token缓存信息
