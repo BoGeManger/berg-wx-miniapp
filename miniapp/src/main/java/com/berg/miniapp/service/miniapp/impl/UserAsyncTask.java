@@ -10,6 +10,7 @@ import com.berg.dao.system.mb.service.MemberTblDao;
 import com.berg.vo.miniapp.in.MaSetUserInfoInVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -26,6 +27,7 @@ public class UserAsyncTask {
      * @param openId
      * @param phone
      */
+    @Async
     public void addMemberAndUpdateBindMa(String appId,String openId,String phone){
         MemberTbl memberTbl =memberTblDao.getOneLimit(new LambdaQueryWrapper<MemberTbl>().eq(MemberTbl::getPhone,phone));
         if(memberTbl==null){
@@ -53,6 +55,7 @@ public class UserAsyncTask {
      * @param openId
      * @param input
      */
+    @Async
     public void updateMaBindByUserInfo(String appId, String openId, MaSetUserInfoInVo input){
         LambdaQueryWrapper query = new LambdaQueryWrapper<MaBindTbl>()
                 .eq(MaBindTbl::getAppId, appId)
