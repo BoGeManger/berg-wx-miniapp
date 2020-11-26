@@ -28,4 +28,6 @@ public class MaSendTemplateInVo {
     @Size(min = 1, message = "模板内容不能为空")
     @ApiModelProperty(value = "模板内容")
     List<MaSendTemplateDataVo> data;
+    @ApiModelProperty(value = "描述")
+    String remark;
 }

@@ -3,6 +3,7 @@ package com.berg.miniapp.service.miniapp.impl;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.api.WxMaSubscribeService;
 import cn.binarywang.wx.miniapp.bean.WxMaSubscribeMessage;
+import cn.hutool.json.JSONUtil;
 import com.berg.constant.RedisKeyConstants;
 import com.berg.exception.FailException;
 import com.berg.miniapp.auth.JWTUtil;
@@ -27,6 +28,9 @@ public class SubscribeMessageServiceImpl extends BaseService implements Subscrib
     @Resource
     RedisTemplate<String, MaTemplateInfoVo> redisTemplate;
 
+    @Autowired
+    SubscribeMessageAsyncTask subscribeMessageAsyncTask;
+
     /**
      * 获取当前帐号下的个人模板列表
      *
@@ -34,9 +38,10 @@ public class SubscribeMessageServiceImpl extends BaseService implements Subscrib
      */
     @Override
     public List<MaTemplateInfoVo> getTemplateList() {
-        List<MaTemplateInfoVo> list = redisTemplate.opsForList().range("list", 0, -1);
+        String appId = getAppId();
+        String key = String.format(RedisKeyConstants.Ma.MA_TEMPLATE_LIST,appId);
+        List<MaTemplateInfoVo> list = redisTemplate.opsForList().range(key, 0, -1);
         if (list.size() == 0) {
-            String appId = getAppId();
             try {
                 WxMaService wxService = WxMaUtil.getService(appId);
                 List<WxMaSubscribeService.TemplateInfo> templateList = wxService.getSubscribeService().getTemplateList();
@@ -45,7 +50,6 @@ public class SubscribeMessageServiceImpl extends BaseService implements Subscrib
                     BeanUtils.copyProperties(item, maTemplateInfoVo);
                     list.add(maTemplateInfoVo);
                 });
-                String key = String.format(RedisKeyConstants.Ma.MA_TEMPLATE_LIST,appId);
                 redisTemplate.opsForList().leftPushAll(key,list);
                 redisTemplate.expire(key,30, TimeUnit.DAYS);
             } catch (Exception ex) {
@@ -78,6 +82,9 @@ public class SubscribeMessageServiceImpl extends BaseService implements Subscrib
             });
             wxMaSubscribeMessage.setData(data);
             wxService.getMsgService().sendSubscribeMsg(wxMaSubscribeMessage);
+            //新增消息记录
+            subscribeMessageAsyncTask.addMsgRecord(appId,openId, JSONUtil.toJsonStr(wxMaSubscribeMessage.getData()),wxMaSubscribeMessage.getTemplateId()
+                    ,wxMaSubscribeMessage.getPage(),wxMaSubscribeMessage.getMiniprogramState(),wxMaSubscribeMessage.getLang(),input.getRemark());
         } catch (Exception ex) {
             throw new FailException("调用小程序获取小程序码接口get失败:" + ex.getMessage());
         }

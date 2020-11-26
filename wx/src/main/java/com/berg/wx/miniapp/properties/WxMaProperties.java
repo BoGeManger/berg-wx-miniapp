@@ -41,6 +41,10 @@ public class WxMaProperties {
          * 消息格式，XML或者JSON
          */
         String msgDataFormat;
+        /**
+         * 设置微信小程序名称
+         */
+        String name;
     }
 
 }

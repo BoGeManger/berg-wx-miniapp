@@ -104,6 +104,7 @@ wx:
     configs:
       - appId:
         secret:
+        name:
 
 snowflake:
   id:

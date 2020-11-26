@@ -37,6 +37,10 @@ public class WxMpProperties {
          * 设置微信公众号的EncodingAESKey.
          */
         String aesKey;
+        /**
+         * 设置微信公众号名称
+         */
+        String name;
     }
 
 }
