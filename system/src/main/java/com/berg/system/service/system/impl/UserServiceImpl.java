@@ -3,6 +3,7 @@ package com.berg.system.service.system.impl;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.berg.dao.base.DSTransactional;
 import com.berg.dao.system.sys.entity.UserComponentTbl;
 import com.berg.dao.system.sys.service.UserComponentTblDao;
 import com.berg.dao.system.sys.entity.UserRoleTbl;
@@ -93,8 +94,7 @@ public class UserServiceImpl implements UserService {
      * @param input
      * @return
      */
-    @DS("system")
-    @Transactional
+    @DSTransactional
     @Override
     public Integer addUser(UserEditVo input) {
         String operator = jWTUtil.getUsername();
@@ -114,8 +114,7 @@ public class UserServiceImpl implements UserService {
      * @param input
      * @return
      */
-    @DS("system")
-    @Transactional
+    @DSTransactional
     @Override
     public Integer updateUser(UserEditVo input) {
         String operator = jWTUtil.getUsername();
@@ -135,8 +134,7 @@ public class UserServiceImpl implements UserService {
      *
      * @param id
      */
-    @DS("system")
-    @Transactional
+    @DSTransactional
     @Override
     public void delUser(Integer id) {
         UserTbl userTbl = userTblDao.getById(id);

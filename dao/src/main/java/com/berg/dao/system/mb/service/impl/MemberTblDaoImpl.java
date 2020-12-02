@@ -1,5 +1,6 @@
 package com.berg.dao.system.mb.service.impl;
 
+import com.berg.dao.constant.DataSource;
 import com.berg.dao.system.mb.entity.MemberTbl;
 import com.berg.dao.system.mb.mapper.MemberTblMapper;
 import com.berg.dao.system.mb.service.MemberTblDao;
@@ -16,13 +17,13 @@ import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
  * @author 
  * @since 2020-11-09
  */
-@DS("system")
+@DS(DataSource.SYSTEM)
 @Repository("system.MemberTblDaoImpl")
 public class MemberTblDaoImpl extends ServiceImpl<MemberTblMapper, MemberTbl> implements MemberTblDao {
 
     @Override
     public MemberTblMapper getMapper(){
-      DynamicDataSourceContextHolder.push("system");
+      DynamicDataSourceContextHolder.push(DataSource.SYSTEM);
       return this.getBaseMapper();
     }
 }

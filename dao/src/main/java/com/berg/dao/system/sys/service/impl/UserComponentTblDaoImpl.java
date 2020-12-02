@@ -1,5 +1,6 @@
 package com.berg.dao.system.sys.service.impl;
 
+import com.berg.dao.constant.DataSource;
 import com.berg.dao.system.sys.entity.UserComponentTbl;
 import com.berg.dao.system.sys.mapper.UserComponentTblMapper;
 import com.berg.dao.system.sys.service.UserComponentTblDao;
@@ -16,13 +17,13 @@ import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
  * @author 
  * @since 2020-09-23
  */
-@DS("system")
+@DS(DataSource.SYSTEM)
 @Repository("system.UserComponentTblDaoImpl")
 public class UserComponentTblDaoImpl extends ServiceImpl<UserComponentTblMapper, UserComponentTbl> implements UserComponentTblDao {
 
     @Override
     public UserComponentTblMapper getMapper(){
-      DynamicDataSourceContextHolder.push("system");
+      DynamicDataSourceContextHolder.push(DataSource.SYSTEM);
       return this.getBaseMapper();
     }
 }

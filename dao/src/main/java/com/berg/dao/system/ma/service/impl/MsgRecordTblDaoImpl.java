@@ -1,5 +1,6 @@
 package com.berg.dao.system.ma.service.impl;
 
+import com.berg.dao.constant.DataSource;
 import com.berg.dao.system.ma.entity.MsgRecordTbl;
 import com.berg.dao.system.ma.mapper.MsgRecordTblMapper;
 import com.berg.dao.system.ma.service.MsgRecordTblDao;
@@ -16,13 +17,13 @@ import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
  * @author 
  * @since 2020-11-26
  */
-@DS("system")
+@DS(DataSource.SYSTEM)
 @Repository("system.MsgRecordTblDaoImpl")
 public class MsgRecordTblDaoImpl extends ServiceImpl<MsgRecordTblMapper, MsgRecordTbl> implements MsgRecordTblDao {
 
     @Override
     public MsgRecordTblMapper getMapper(){
-      DynamicDataSourceContextHolder.push("system");
+      DynamicDataSourceContextHolder.push(DataSource.SYSTEM);
       return this.getBaseMapper();
     }
 }

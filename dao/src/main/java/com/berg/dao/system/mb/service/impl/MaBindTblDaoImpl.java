@@ -1,5 +1,6 @@
 package com.berg.dao.system.mb.service.impl;
 
+import com.berg.dao.constant.DataSource;
 import com.berg.dao.system.mb.entity.MaBindTbl;
 import com.berg.dao.system.mb.mapper.MaBindTblMapper;
 import com.berg.dao.system.mb.service.MaBindTblDao;
@@ -16,13 +17,13 @@ import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
  * @author 
  * @since 2020-11-09
  */
-@DS("system")
+@DS(DataSource.SYSTEM)
 @Repository("system.MaBindTblDaoImpl")
 public class MaBindTblDaoImpl extends ServiceImpl<MaBindTblMapper, MaBindTbl> implements MaBindTblDao {
 
     @Override
     public MaBindTblMapper getMapper(){
-      DynamicDataSourceContextHolder.push("system");
+      DynamicDataSourceContextHolder.push(DataSource.SYSTEM);
       return this.getBaseMapper();
     }
 }
