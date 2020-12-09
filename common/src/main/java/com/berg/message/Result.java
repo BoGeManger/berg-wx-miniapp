@@ -1,9 +1,11 @@
 package com.berg.message;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
 
@@ -29,10 +31,21 @@ public class Result<T> implements Serializable {
     @ApiModelProperty(value = "返回数据")
     T data;
 
+    @JsonIgnore
+    HttpStatus httpStatus;
+
     public Result(String errorCode, String errorMsg, T data) {
         this.code = errorCode;
         this.message = errorMsg;
         this.data = data;
+        this.httpStatus = HttpStatus.OK;
+    }
+
+    public Result(String errorCode, String errorMsg, T data,HttpStatus httpStatus) {
+        this.code = errorCode;
+        this.message = errorMsg;
+        this.data = data;
+        this.httpStatus = httpStatus;
     }
 
 }
