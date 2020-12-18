@@ -2,11 +2,10 @@ package com.berg.miniapp.service.miniapp.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaCodeLineColor;
-import com.berg.exception.FailException;
-import com.berg.miniapp.auth.JWTUtil;
+import cn.hutool.json.JSONUtil;
+import com.berg.common.exception.FailException;
 import com.berg.miniapp.service.base.BaseService;
 import com.berg.miniapp.service.miniapp.QRCodeService;
-import com.berg.utils.JsonHelper;
 import com.berg.vo.miniapp.in.MaCreateQRCodeInVo;
 import com.berg.vo.miniapp.in.MaQRCodeGetInVo;
 import com.berg.vo.miniapp.in.MaQRCodeGetUnlimitedInVo;
@@ -46,7 +45,7 @@ public class QRCodeServiceImpl extends BaseService implements QRCodeService {
         String appId = getAppId();
         try {
             WxMaService wxService = WxMaUtil.getService(appId);
-            WxMaCodeLineColor wxMaCodeLineColor = JsonHelper.fromJson(input.getLineColor(),WxMaCodeLineColor.class,null);
+            WxMaCodeLineColor wxMaCodeLineColor = JSONUtil.toBean(input.getLineColor(),WxMaCodeLineColor.class);
             file = wxService.getQrcodeService().createWxaCodeBytes(input.getPath(),input.getWidth(),input.getAutoColor(),wxMaCodeLineColor,input.getIshyaline());
         }catch (Exception ex){
             throw new FailException("调用小程序获取小程序码接口get失败:"+ex.getMessage());
@@ -65,7 +64,7 @@ public class QRCodeServiceImpl extends BaseService implements QRCodeService {
         String appId = getAppId();
         try {
             WxMaService wxService = WxMaUtil.getService(appId);
-            WxMaCodeLineColor wxMaCodeLineColor = JsonHelper.fromJson(input.getLineColor(),WxMaCodeLineColor.class,null);
+            WxMaCodeLineColor wxMaCodeLineColor = JSONUtil.toBean(input.getLineColor(),WxMaCodeLineColor.class);
             file = wxService.getQrcodeService().createWxaCodeUnlimitBytes(input.getScene(),input.getPath(),input.getWidth(),input.getAutoColor(),wxMaCodeLineColor,input.getIshyaline());
         }catch (Exception ex){
             throw new FailException("调用小程序获取小程序码接口get失败:"+ex.getMessage());

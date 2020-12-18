@@ -1,7 +1,7 @@
 package com.berg.system.controller;
 
-import com.berg.base.BaseController;
-import com.berg.message.Result;
+import com.berg.common.base.BaseController;
+import com.berg.common.constant.Result;
 import com.berg.system.service.system.OrganizationService;
 import com.berg.vo.common.ListVo;
 import com.berg.vo.system.OrganizationEditVo;

@@ -1,7 +1,7 @@
 package com.berg.miniapp.controller;
 
-import com.berg.base.BaseController;
-import com.berg.message.Result;
+import com.berg.common.base.BaseController;
+import com.berg.common.constant.Result;
 import com.berg.miniapp.service.miniapp.PortalService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;

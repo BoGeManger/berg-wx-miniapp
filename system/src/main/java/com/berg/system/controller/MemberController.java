@@ -1,9 +1,9 @@
 package com.berg.system.controller;
 
 
-import com.berg.base.BaseController;
+import com.berg.common.base.BaseController;
 import com.berg.dao.page.PageInfo;
-import com.berg.message.Result;
+import com.berg.common.constant.Result;
 import com.berg.system.service.member.MemberService;
 import com.berg.vo.member.MaBindVo;
 import com.berg.vo.member.MemberVo;

@@ -1,12 +1,13 @@
 package com.berg.system.auth;
 
+import cn.hutool.crypto.SecureUtil;
+import cn.hutool.crypto.symmetric.DES;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
 import com.berg.system.constant.SystemConstants;
-import com.berg.utils.DesUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -19,6 +20,10 @@ import java.util.Date;
 @Slf4j
 @Component
 public class JWTUtil {
+
+    public static final String KEY = "password";
+
+    public static final cn.hutool.crypto.symmetric.DES DES = SecureUtil.des(KEY.getBytes());
 
     @Autowired
     SystemConstants systemConstans;
@@ -81,7 +86,7 @@ public class JWTUtil {
     public String getToken(){
         try {
             Subject subject = SecurityUtils.getSubject();
-            return DesUtil.encrypt(subject.getPrincipal().toString());
+            return DES.encryptHex(subject.getPrincipal().toString());
         } catch (JWTDecodeException e) {
             log.error("error：{}", e.getMessage());
             return null;

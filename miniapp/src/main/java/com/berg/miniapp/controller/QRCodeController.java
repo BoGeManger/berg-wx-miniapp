@@ -1,7 +1,7 @@
 package com.berg.miniapp.controller;
 
-import com.berg.base.BaseController;
-import com.berg.message.Result;
+import com.berg.common.base.BaseController;
+import com.berg.common.constant.Result;
 import com.berg.miniapp.service.miniapp.QRCodeService;
 import com.berg.vo.miniapp.in.MaCreateQRCodeInVo;
 import com.berg.vo.miniapp.in.MaQRCodeGetInVo;

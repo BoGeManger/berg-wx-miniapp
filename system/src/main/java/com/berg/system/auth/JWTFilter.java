@@ -1,11 +1,10 @@
 package com.berg.system.auth;
 
+import cn.hutool.extra.spring.SpringUtil;
 import com.alibaba.fastjson.JSON;
-import com.berg.message.MessageConstant;
-import com.berg.message.Result;
+import com.berg.common.constant.MessageConstants;
+import com.berg.common.constant.Result;
 import com.berg.system.constant.SystemConstants;
-import com.berg.utils.DesUtil;
-import com.berg.utils.SpringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.UnauthorizedException;
@@ -58,7 +57,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         String token = httpServletRequest.getHeader(TOKEN);
         try {
-            JWTToken jwtToken = new JWTToken(DesUtil.decrypt(token));
+            JWTToken jwtToken = new JWTToken(JWTUtil.DES.decryptStr(token));
             getSubject(request, response).login(jwtToken);
             return true;
         } catch (Exception e) {
@@ -93,7 +92,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         httpResponse.setCharacterEncoding("utf-8");
         httpResponse.setContentType("application/json; charset=utf-8");
         try  {
-            String str = JSON.toJSONString(new Result(MessageConstant.UNAUTH_ERROR_CODE,"登录失效，请重新登录",""));
+            String str = JSON.toJSONString(new Result(MessageConstants.UNAUTH_ERROR_CODE,"登录失效，请重新登录",""));
             httpResponse.getWriter().write(str);
         } catch (IOException e) {
             log.error("sendChallenge error：", e);

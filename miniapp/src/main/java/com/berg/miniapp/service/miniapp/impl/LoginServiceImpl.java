@@ -5,13 +5,11 @@ import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.berg.dao.system.mb.entity.MaBindTbl;
 import com.berg.dao.system.mb.service.MaBindTblDao;
-import com.berg.exception.FailException;
+import com.berg.common.exception.FailException;
 import com.berg.miniapp.auth.JWTToken;
-import com.berg.miniapp.auth.JWTUtil;
 import com.berg.miniapp.constant.MiniappConstants;
 import com.berg.miniapp.service.base.BaseService;
 import com.berg.miniapp.service.miniapp.LoginService;
-import com.berg.utils.DesUtil;
 import com.berg.vo.miniapp.MaUserInfoVo;
 import com.berg.vo.miniapp.in.MaLoginInVo;
 import com.berg.vo.miniapp.in.MaRefreshInVo;
@@ -143,7 +141,7 @@ public class LoginServiceImpl extends BaseService implements LoginService{
      * @return
      */
     JWTToken getJwt(MaLoginOutVo input) {
-        String token = DesUtil.encrypt(jWTUtil.sign(input.getAppId(),input.getOpenId(),input.getUnionId(), input.getMemberId()
+        String token = jWTUtil.DES.encryptHex(jWTUtil.sign(input.getAppId(),input.getOpenId(),input.getUnionId(), input.getMemberId()
                 ,input.getMaBindId(),input.getCreateTime(),input.getModifyTime(),input.getUserinfo(),input.getSessionKey()));
         return new JWTToken(token, input.getAppId(),input.getOpenId(),miniappConstants.getExpireTime());
     }

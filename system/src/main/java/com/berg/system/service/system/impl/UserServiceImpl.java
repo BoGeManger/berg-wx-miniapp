@@ -1,8 +1,8 @@
 package com.berg.system.service.system.impl;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.berg.common.constant.RedisKeyConstants;
 import com.berg.dao.base.DSTransactional;
 import com.berg.dao.system.sys.entity.UserComponentTbl;
 import com.berg.dao.system.sys.service.UserComponentTblDao;
@@ -11,8 +11,7 @@ import com.berg.dao.system.sys.entity.UserTbl;
 import com.berg.dao.system.sys.service.UserRoleTblDao;
 import com.berg.dao.system.sys.service.UserTblDao;
 import com.berg.dao.page.PageInfo;
-import com.berg.constant.RedisKeyConstants;
-import com.berg.exception.UserFriendException;
+import com.berg.common.exception.UserFriendException;
 import com.berg.system.service.system.UserService;
 import com.berg.system.auth.JWTUtil;
 import com.berg.vo.system.UserEditVo;
@@ -23,7 +22,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
 import java.time.LocalDateTime;

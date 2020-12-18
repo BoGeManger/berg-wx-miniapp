@@ -3,7 +3,7 @@ package com.berg.system.service.miniapp.impl;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.analysis.*;
 import cn.hutool.core.date.DateUtil;
-import com.berg.exception.FailException;
+import com.berg.common.exception.FailException;
 import com.berg.system.service.miniapp.AnalysisService;
 import com.berg.vo.miniapp.*;
 import com.berg.vo.miniapp.in.*;

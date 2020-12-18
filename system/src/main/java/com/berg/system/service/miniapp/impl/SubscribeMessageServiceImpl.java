@@ -1,7 +1,7 @@
 package com.berg.system.service.miniapp.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.berg.constant.RedisKeyConstants;
+import com.berg.common.constant.RedisKeyConstants;
 import com.berg.dao.page.PageInfo;
 import com.berg.dao.system.ma.entity.MsgRecordTbl;
 import com.berg.dao.system.ma.service.MsgRecordTblDao;

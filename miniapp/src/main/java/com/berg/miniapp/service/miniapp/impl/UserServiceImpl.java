@@ -2,8 +2,8 @@ package com.berg.miniapp.service.miniapp.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaPhoneNumberInfo;
-import com.berg.exception.FailException;
-import com.berg.exception.ParamException;
+import com.berg.common.exception.FailException;
+import com.berg.common.exception.ParamException;
 import com.berg.miniapp.auth.JWTUtil;
 import com.berg.miniapp.service.base.BaseService;
 import com.berg.miniapp.service.miniapp.UserService;

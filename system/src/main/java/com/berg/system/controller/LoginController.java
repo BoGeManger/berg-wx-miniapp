@@ -1,7 +1,7 @@
 package com.berg.system.controller;
 
-import com.berg.base.BaseController;
-import com.berg.message.Result;
+import com.berg.common.base.BaseController;
+import com.berg.common.constant.Result;
 import com.berg.system.service.system.LoginService;
 import com.berg.vo.system.in.LoginInVo;
 import com.berg.vo.system.out.LoginOutVo;

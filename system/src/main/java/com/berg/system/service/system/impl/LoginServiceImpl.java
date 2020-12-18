@@ -1,21 +1,20 @@
 package com.berg.system.service.system.impl;
 
+import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.berg.constant.RedisKeyConstants;
+import com.berg.common.constant.RedisKeyConstants;
+import com.berg.common.exception.UserFriendException;
 import com.berg.dao.system.sys.entity.ComponentTbl;
 import com.berg.dao.system.sys.entity.UserTbl;
 import com.berg.dao.system.sys.service.ComponentTblDao;
 import com.berg.dao.system.sys.service.RoleTblDao;
 import com.berg.dao.system.sys.service.UserTblDao;
-import com.berg.exception.UserFriendException;
 import com.berg.system.service.system.LoginService;
 import com.berg.system.auth.JWTToken;
 import com.berg.system.auth.JWTUtil;
 import com.berg.system.constant.SystemConstants;
-import com.berg.utils.DateUtil;
-import com.berg.utils.DesUtil;
 import com.berg.vo.system.UserVo;
 import com.berg.vo.system.in.LoginInVo;
 import com.berg.vo.system.out.LoginOutVo;
@@ -37,6 +36,7 @@ public class LoginServiceImpl implements LoginService {
     JWTUtil jWTUtil;
     @Autowired
     SystemConstants systemConstans;
+
     @Autowired
     StringRedisTemplate stringTemplate;
 
@@ -98,8 +98,8 @@ public class LoginServiceImpl implements LoginService {
      * @return
      */
     JWTToken getJwt(UserTbl userTbl) {
-        String token = DesUtil.encrypt(jWTUtil.sign(userTbl.getUsername(), userTbl.getPassword()));
-        Date expireTime = DateUtil.addDateBySecond(new Date(), systemConstans.getExpireTime());
+        String token = jWTUtil.DES.encryptHex((jWTUtil.sign(userTbl.getUsername(), userTbl.getPassword())));
+        Date expireTime = DateUtil.offsetSecond(new Date(),systemConstans.getExpireTime());
         String expireTimeStr = DateUtil.format(expireTime, "yyyyMMddHHmmss");
         return new JWTToken(token, expireTimeStr);
     }
@@ -168,7 +168,7 @@ public class LoginServiceImpl implements LoginService {
      */
     @Override
     public void logout(){
-        String token = jWTUtil.getToken();
+        String token =  jWTUtil.getToken();
         if(StringUtils.isNotBlank(token)){
             String key = String.format(RedisKeyConstants.System.SYSTEM_TOKEN, token);
             stringTemplate.delete(key);

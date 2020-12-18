@@ -1,12 +1,11 @@
 package com.berg.system.auth;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.berg.constant.RedisKeyConstants;
+import com.berg.common.constant.RedisKeyConstants;
 import com.berg.dao.system.sys.entity.UserTbl;
 import com.berg.dao.system.sys.service.UserTblDao;
 import com.berg.system.service.system.LoginService;
 import com.berg.system.constant.SystemConstants;
-import com.berg.utils.DesUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -92,7 +91,7 @@ public class ShiroRealm extends AuthorizingRealm {
         //这里的token是从JWTFilter 的 executeLogin 方法传递过来的，已经经过了解密
         String token = (String) authenticationToken.getCredentials();
         //从redis里获取这个token
-        String encryptToken = DesUtil.encrypt(token);
+        String encryptToken = jWTUtil.DES.encryptHex(token);
         String key = String.format(RedisKeyConstants.System.SYSTEM_TOKEN, encryptToken);
         if(!stringTemplate.hasKey(key)){
             throw new AuthenticationException("token已经过期");
@@ -104,6 +103,7 @@ public class ShiroRealm extends AuthorizingRealm {
 
         // 通过用户名查询用户信息
         UserTbl userTbl = userTblDao.getOne(new LambdaQueryWrapper<UserTbl>().eq(UserTbl::getUsername,username));
+
 
         if (userTbl == null)
             throw new AuthenticationException("用户名或密码错误");

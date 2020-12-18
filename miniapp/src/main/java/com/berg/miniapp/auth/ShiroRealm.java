@@ -1,7 +1,6 @@
 package com.berg.miniapp.auth;
 
-import com.berg.constant.RedisKeyConstants;
-import com.berg.utils.DesUtil;
+import com.berg.common.constant.RedisKeyConstants;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -61,7 +60,7 @@ public class ShiroRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         //这里的token是从JWTFilter 的 executeLogin 方法传递过来的，已经经过了解密
         String token = (String) authenticationToken.getCredentials();
-        String encryptToken = DesUtil.encrypt(token);
+        String encryptToken = jWTUtil.DES.encryptHex(token);
         String appId = jWTUtil.getAppId(token);
         String openId = jWTUtil.getOpenId(token);
         if (StringUtils.isBlank(openId)){

@@ -1,7 +1,7 @@
 package com.berg.miniapp.controller;
 
-import com.berg.base.BaseController;
-import com.berg.message.Result;
+import com.berg.common.base.BaseController;
+import com.berg.common.constant.Result;
 import com.berg.miniapp.service.miniapp.CheckService;
 import com.berg.vo.miniapp.in.MaMsgSecCheckInVo;
 import io.swagger.annotations.Api;
