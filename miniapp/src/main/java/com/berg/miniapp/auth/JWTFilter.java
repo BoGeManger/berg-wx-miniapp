@@ -1,9 +1,9 @@
 package com.berg.miniapp.auth;
 
-import cn.hutool.extra.spring.SpringUtil;
 import com.alibaba.fastjson.JSON;
 import com.berg.common.constant.MessageConstants;
 import com.berg.common.constant.Result;
+import com.berg.common.utils.SpringUtil;
 import com.berg.miniapp.constant.MiniappConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

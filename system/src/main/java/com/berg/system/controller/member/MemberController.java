@@ -1,4 +1,4 @@
-package com.berg.system.controller;
+package com.berg.system.controller.member;
 
 
 import com.berg.common.base.BaseController;

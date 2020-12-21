@@ -1,4 +1,4 @@
-package com.berg.system.controller;
+package com.berg.system.controller.miniapp;
 
 import com.berg.common.base.BaseController;
 import com.berg.dao.page.PageInfo;
