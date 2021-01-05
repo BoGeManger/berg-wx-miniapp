@@ -22,12 +22,12 @@
 ├── sql 数据脚本<br>
 ├── system 后台服务<br>
 └── wx 微信基础层<br>
-       ├─ all-wx 微信基础层所有引用<br>
-       ├─ wx-cp 微信企业号<br>
-       ├─ wx-miniapp 微信小程序<br>
-       ├─ wx-mp 微信公众号<br>
-       ├─ wx-open 微信开放平台<br>
-       └─ wx-pay 微信支付<br>
+&nbsp;&nbsp; &nbsp;&nbsp;├─ all-wx 微信基础层所有引用<br>
+&nbsp;&nbsp; &nbsp;&nbsp;├─ wx-cp 微信企业号<br>
+&nbsp;&nbsp; &nbsp;&nbsp;├─ wx-miniapp 微信小程序<br>
+&nbsp;&nbsp; &nbsp;&nbsp;├─ wx-mp 微信公众号<br>
+&nbsp;&nbsp; &nbsp;&nbsp;├─ wx-open 微信开放平台<br>
+&nbsp;&nbsp; &nbsp;&nbsp;└─ wx-pay 微信支付<br>
 
 ### 服务划分
 |名称|定义|端口|workerId|
