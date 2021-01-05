@@ -1,11 +1,37 @@
 #微信小程序示例项目
+* 包含中间件，基础后台系统业务逻辑，授权管理，文件管理
+* 微信小程序用户授权及信息基础，基础微信小程序应用接口
 
-### 架构分层简介
+### 目录结构
+├── common 公共应用<br>
+│   ├─ all-common 公共应用所有引用<br>
+│   ├─ application 基础服务应用<br>
+│   ├─ minio 文件<br>
+│   ├─ quartz 定时任务<br>
+│   ├─ redis 缓存<br>
+│   └─ util 工具<br>
+├── dao 数据交互<br>
+│   ├─ all-dao 数据交互所有引用<br>
+│   ├─ base-dao 基础数据交互引用<br>
+│   └─ system-dao 后台系统数据交互<br>
+├── manager 公共管理层<br>
+│   ├─ miniapp-auth 微信小程序服务授权<br>
+│   └─ system-auth 后台服务授权<br>
+├── miniapp 微信小程序服务<br>
+├── model 实体层<br>
+├── sql 数据脚本<br>
+├── system 后台服务<br>
+└── wx 微信基础层<br>
+      ├─ all-wx 微信基础层所有引用<br>
+      ├─ wx-cp 微信企业号<br>
+      ├─ wx-miniapp 微信小程序<br>
+      ├─ wx-mp 微信公众号<br>
+      ├─ wx-open 微信开放平台<br>
+      └─ wx-pay 微信支付<br>
+
+### 服务划分
 |名称|定义|端口|workerId|
 |:----: |:----:|:----:|:----:|
-|common|公共类|||
-|model|实体|||
-|dao|数据交互|||
 |system|后台服务|42000|0|
 |miniapp|小程序服务|43000|1|
 
@@ -40,11 +66,12 @@
  * 消息队列：RabbitMQ
  * 定时任务：Quartz
  * 文件服务：Minio
- * Excel文件处理：AutoPOI
- * 鉴权框架：Shiro+JWT
- * Mybatis插件：Mybatis Plus,PageHelper,dynamic datasource
- * 接口文档框架：Swagger 2
+ * 鉴权：Shiro+JWT
+ * Mybatis插件：Mybatis Plus
+ * 分页插件：PageHelper
+ * 多数据源组件：dynamic datasource
+ * 接口文档组件：knife4j
  * JDBC组件：Druid 
- * 公共工具：Hutool 
- * 验证框架：Hibernate Validator
+ * 公共工具组件：Hutool 
+ * 验证组件：Hibernate Validator
  * 微信SDK：WxJava
