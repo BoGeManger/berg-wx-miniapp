@@ -1,6 +1,5 @@
 package com.berg.system.service.system.impl;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.berg.dao.base.DSTransactional;
@@ -9,8 +8,8 @@ import com.berg.dao.system.sys.entity.RoleComponentTbl;
 import com.berg.dao.system.sys.entity.RoleTbl;
 import com.berg.dao.system.sys.service.RoleComponentTblDao;
 import com.berg.dao.system.sys.service.RoleTblDao;
+import com.berg.system.service.AbstractService;
 import com.berg.system.service.system.RoleService;
-import com.berg.system.auth.JWTUtil;
 import com.berg.vo.system.RoleEditVo;
 import com.berg.vo.system.RoleVo;
 import com.berg.vo.system.in.GetRolePageInVo;
@@ -18,17 +17,14 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class RoleServiceImpl implements RoleService {
-
-    @Autowired
-    JWTUtil jWTUtil;
+public class RoleServiceImpl extends AbstractService implements RoleService {
+    
     @Autowired
     RoleTblDao roleTblDao;
     @Autowired
@@ -80,7 +76,7 @@ public class RoleServiceImpl implements RoleService {
     @DSTransactional
     @Override
     public Integer addRole(RoleEditVo input){
-        String operator = jWTUtil.getUsername();
+        String operator = getUsername();
         Integer roleId = addOrUpdateRole(input,operator);
         if(input.getComIds().size()>0){
             addOrUpdateRoleCom(roleId,input.getComIds(),operator);
@@ -96,7 +92,7 @@ public class RoleServiceImpl implements RoleService {
     @DSTransactional
     @Override
     public Integer updateRole(RoleEditVo input){
-        String operator = jWTUtil.getUsername();
+        String operator = getUsername();
         Integer roleId = addOrUpdateRole(input,operator);
         if(input.getComIds().size()>0){
             addOrUpdateRoleCom(roleId,input.getComIds(),operator);
@@ -172,7 +168,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public void delRole(Integer id){
         LocalDateTime now = LocalDateTime.now();
-        String operator = jWTUtil.getUsername();
+        String operator = getUsername();
         RoleTbl roleTbl = roleTblDao.getById(id);
         if(roleTbl!=null){
             roleTbl.setDelTime(now);

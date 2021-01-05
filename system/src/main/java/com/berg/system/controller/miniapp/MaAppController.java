@@ -1,6 +1,6 @@
 package com.berg.system.controller.miniapp;
 
-import com.berg.common.base.BaseController;
+import com.berg.common.controller.AbstractController;
 import com.berg.common.constant.Result;
 import com.berg.system.service.miniapp.AppService;
 import com.berg.vo.miniapp.MaAppVo;
@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/maapp")
 @Api(tags = "微信小程序应用")
-public class MaAppController extends BaseController {
+public class MaAppController extends AbstractController {
 
     @Autowired
     AppService appService;

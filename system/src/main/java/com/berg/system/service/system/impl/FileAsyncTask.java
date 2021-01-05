@@ -1,12 +1,16 @@
 package com.berg.system.service.system.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.berg.common.MinioUtil;
+import com.berg.common.constant.Bucket;
+import com.berg.common.exception.FailException;
 import com.berg.dao.system.sys.entity.FileTbl;
 import com.berg.dao.system.sys.service.FileTblDao;
 import com.berg.vo.system.FilePathVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 
@@ -18,36 +22,28 @@ public class FileAsyncTask {
 
     /**
      * 上传文件
+     * @param file
      * @param name
-     * @param code
-     * @param type
+     * @param id
+     * @param user
      */
     @Async
-    public void  uploadFile(FilePathVo filevo, String name, String code, Integer type, String user){
-        LocalDateTime now = LocalDateTime.now();
-        Boolean isAdd = true;
-        LambdaQueryWrapper query = new LambdaQueryWrapper<FileTbl>().eq(FileTbl::getName,name);
-        FileTbl fileTbl = fileTblDao.getOne(query);
-        if(fileTbl!=null){
-            isAdd = false;
-        }else{
-            fileTbl = new FileTbl();
-            fileTbl.setName(name);
-            fileTbl.setCreateTime(now);
-            fileTbl.setCreateUser(user);
+    public void  uploadFile(MultipartFile file,String name,Integer id, String user){
+        FilePathVo result = new FilePathVo();
+        String url ="";
+        try{
+            url = MinioUtil.put(Bucket.MASTER,name,file);
+        }catch (Exception ex){
+            throw new FailException("上传文件失败："+ex.getMessage());
         }
+        LocalDateTime now = LocalDateTime.now();
+        FileTbl fileTbl = fileTblDao.getById(id);
         fileTbl.setModifyTime(now);
         fileTbl.setModifyUser(user);
-        fileTbl.setCode(code);
-        fileTbl.setPath(filevo.getPath());
-        fileTbl.setFullPath(filevo.getFullPath());
-        fileTbl.setType(type);
-        fileTbl.setIsdel(0);
-        if(isAdd){
-            fileTblDao.save(fileTbl);
-        }else {
-            fileTblDao.updateById(fileTbl);
-        }
+        fileTbl.setPath(result.getPath());
+        fileTbl.setFullPath(result.getFullPath());
+        fileTbl.setStatus(1);
+        fileTblDao.updateById(fileTbl);
     }
 
 }

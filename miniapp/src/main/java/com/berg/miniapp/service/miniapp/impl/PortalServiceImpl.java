@@ -1,17 +1,8 @@
 package com.berg.miniapp.service.miniapp.impl;
 
-import cn.binarywang.wx.miniapp.api.WxMaService;
-import cn.binarywang.wx.miniapp.bean.WxMaMessage;
-import cn.binarywang.wx.miniapp.constant.WxMaConstants;
-import cn.binarywang.wx.miniapp.message.WxMaMessageRouter;
-import com.berg.common.exception.FailException;
-import com.berg.common.exception.ParamException;
 import com.berg.miniapp.service.miniapp.PortalService;
-import com.berg.wx.miniapp.utils.WxMaUtil;
-import org.apache.commons.lang3.StringUtils;
+import com.berg.wx.utils.WxMaUtil;
 import org.springframework.stereotype.Service;
-
-import java.util.Objects;
 
 @Service
 public class PortalServiceImpl implements PortalService {

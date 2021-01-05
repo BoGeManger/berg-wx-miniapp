@@ -15,10 +15,6 @@ public class UserVo {
     String username;
     @ApiModelProperty(value = "真实姓名")
     String realname;
-    @ApiModelProperty(value = "所属组织表id")
-    Integer organizationId;
-    @ApiModelProperty(value = "所属组织名称")
-    String organizationName;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @ApiModelProperty(value = "锁定时间")
     LocalDateTime lockTime;

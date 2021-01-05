@@ -27,6 +27,7 @@
         <module>wx</module>
         <module>system</module>
         <module>miniapp</module>
+        <module>manager</module>
     </modules>
 
     <properties>

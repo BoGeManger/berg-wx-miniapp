@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
  * 系统组件表
  * </p>
  *
- * @author 
+ * @author
  * @since 2020-06-05
  */
 @Data
@@ -45,16 +45,6 @@ public class ComponentTbl implements Serializable {
      * 权限标识
      */
     private String perms;
-
-    /**
-     * 对应路由地址
-     */
-    private String path;
-
-    /**
-     * 图标
-     */
-    private String icon;
 
     /**
      * 组件描述

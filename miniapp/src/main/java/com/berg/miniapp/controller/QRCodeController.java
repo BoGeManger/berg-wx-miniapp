@@ -1,6 +1,6 @@
 package com.berg.miniapp.controller;
 
-import com.berg.common.base.BaseController;
+import com.berg.common.controller.AbstractController;
 import com.berg.common.constant.Result;
 import com.berg.miniapp.service.miniapp.QRCodeService;
 import com.berg.vo.miniapp.in.MaCreateQRCodeInVo;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/qrcode")
 @Api(tags = "微信小程序二维码")
-public class QRCodeController extends BaseController {
+public class QRCodeController extends AbstractController {
 
     @Autowired
     QRCodeService qrCodeService;

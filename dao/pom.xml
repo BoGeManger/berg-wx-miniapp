@@ -12,6 +12,7 @@
     <modules>
         <module>system-dao</module>
         <module>base-dao</module>
+        <module>all-dao</module>
     </modules>
     <artifactId>dao</artifactId>
 

@@ -1,6 +1,6 @@
 package com.berg.system.controller.system;
 
-import com.berg.common.base.BaseController;
+import com.berg.common.controller.AbstractController;
 import com.berg.dao.page.PageInfo;
 import com.berg.common.constant.Result;
 import com.berg.system.service.system.QuartzJobService;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/quartzjob")
 @Api(tags = "定时任务管理")
-public class QuartzJobController extends BaseController {
+public class QuartzJobController extends AbstractController {
 
     @Autowired
     QuartzJobService quartzJobService;

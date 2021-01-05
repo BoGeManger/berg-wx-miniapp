@@ -2,17 +2,17 @@ package com.berg.miniapp.service.miniapp.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import com.berg.common.exception.FailException;
-import com.berg.miniapp.service.base.BaseService;
+import com.berg.miniapp.service.AbstractService;
 import com.berg.miniapp.service.miniapp.CheckService;
 import com.berg.vo.miniapp.in.MaMsgSecCheckInVo;
-import com.berg.wx.miniapp.utils.WxMaUtil;
+import com.berg.wx.utils.WxMaUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 
 @Service
-public class CheckServiceImpl extends BaseService implements CheckService {
+public class CheckServiceImpl extends AbstractService implements CheckService {
 
     /**
      * 校验图片是否含有违法违规内容

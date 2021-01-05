@@ -1,6 +1,6 @@
 package com.berg.system.controller.system;
 
-import com.berg.common.base.BaseController;
+import com.berg.common.controller.AbstractController;
 import com.berg.common.constant.Result;
 import com.berg.system.service.system.OrganizationService;
 import com.berg.vo.common.ListVo;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/organization")
 @Api(tags = "组织管理")
-public class OrganizationController extends BaseController {
+public class OrganizationController extends AbstractController {
 
     @Autowired
     OrganizationService organizationService;
@@ -32,6 +32,18 @@ public class OrganizationController extends BaseController {
     @GetMapping(value = "getOrganization")
     public Result<OrganizationEditVo> getOrganization(@ApiParam(value = "表id",required = true) @RequestParam Integer id){
         return getSuccessResult("请求成功",organizationService.getOrganization(id));
+    }
+
+    @ApiOperation("新增组织")
+    @PostMapping(value = "addOrganization")
+    public Result<Integer> addOrganization(@RequestBody @Validated OrganizationEditVo input){
+        return getSuccessResult("请求成功",organizationService.addOrganization(input));
+    }
+
+    @ApiOperation("修改组织")
+    @PutMapping(value = "updateOrganization")
+    public Result<Integer> updateOrganization(@RequestBody @Validated OrganizationEditVo input){
+        return getSuccessResult("请求成功",organizationService.updateOrganization(input));
     }
 
     @ApiOperation("批量操作组织(新增,修改,删除)")

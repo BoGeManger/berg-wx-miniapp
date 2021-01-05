@@ -14,19 +14,16 @@
     <dependencies>
         <dependency>
             <groupId>com.berg</groupId>
-            <artifactId>application</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.berg</groupId>
             <artifactId>minio</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
+
         <dependency>
             <groupId>com.berg</groupId>
-            <artifactId>redis</artifactId>
+            <artifactId>quartz</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
+        
         <dependency>
             <groupId>com.berg</groupId>
             <artifactId>util</artifactId>
@@ -35,37 +32,14 @@
 
         <dependency>
             <groupId>com.berg</groupId>
-            <artifactId>system-dao</artifactId>
+            <artifactId>system-auth</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>com.berg</groupId>
-            <artifactId>wx</artifactId>
+            <artifactId>wx-miniapp</artifactId>
             <version>1.0.0-SNAPSHOT</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-data-redis</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>com.auth0</groupId>
-            <artifactId>java-jwt</artifactId>
-            <version>3.8.2</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-spring</artifactId>
-            <version>1.4.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-quartz</artifactId>
         </dependency>
     </dependencies>
 

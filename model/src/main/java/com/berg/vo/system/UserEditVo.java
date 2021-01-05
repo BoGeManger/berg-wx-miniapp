@@ -20,12 +20,8 @@ public class UserEditVo {
     @Size(max = 20, message = "密码长度不能超过20个字符")
     @NotBlank(message = "真实姓名不能为空")
     String realname;
-    @Min(value = 0,message = "所属组织id不能小于0")
-    @ApiModelProperty(value = "所属组织id")
-    Integer organizationId;
-    @Size(max = 100, message = "所属组织名称长度不能超过100个字符")
-    @ApiModelProperty(value = "所属组织名称")
-    String organizationName;
+    @ApiModelProperty(value = "所属组织id集合")
+    List<Integer> organizationIds;
     @ApiModelProperty(value = "权限id集合")
     List<Integer> roldIds;
     @ApiModelProperty(value = "组件id集合")

@@ -1,6 +1,6 @@
 package com.berg.miniapp.controller;
 
-import com.berg.common.base.BaseController;
+import com.berg.common.controller.AbstractController;
 import com.berg.common.constant.Result;
 import com.berg.miniapp.service.miniapp.CheckService;
 import com.berg.vo.miniapp.in.MaMsgSecCheckInVo;
@@ -16,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/check")
 @Api(tags = "微信小程序内容安全")
-public class CheckController extends BaseController {
+public class CheckController extends AbstractController {
 
     @Autowired
     CheckService checkService;

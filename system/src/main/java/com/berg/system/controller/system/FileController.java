@@ -1,8 +1,8 @@
-package com.berg.system.controller.system;
+package com.berg.system.controller;
 
-import com.berg.common.base.BaseController;
-import com.berg.dao.page.PageInfo;
 import com.berg.common.constant.Result;
+import com.berg.common.controller.AbstractController;
+import com.berg.dao.page.PageInfo;
 import com.berg.system.service.system.FileService;
 import com.berg.vo.system.FilePathVo;
 import com.berg.vo.system.FileVo;
@@ -17,12 +17,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.NotBlank;
-
-@RestController
 @RequestMapping("/file")
 @Api(tags = "文件管理")
-public class FileController extends BaseController {
+public class FileController extends AbstractController {
 
     @Autowired
     FileService fileService;
@@ -41,6 +38,16 @@ public class FileController extends BaseController {
                                          @ApiParam(value = "编码") @RequestParam(value = "code",required = false)String code,
                                          @ApiParam(value = "类型(0 模板文件 1 其他)") @RequestParam(value = "type",required = false,defaultValue = "1")Integer type){
         return getSuccessResult("请求成功",fileService.uploadFile(file,name,code,type));
+    }
+
+    @ApiOperation("异步上传文件")
+    @PostMapping(value = "uploadFileAsync",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public Result<Boolean> uploadFileAsync(@ApiParam(value = "文件",required = true) @RequestPart(value = "file") MultipartFile file,
+                                           @ApiParam(value = "名称",required = true) @RequestParam(value = "name")String name,
+                                           @ApiParam(value = "编码") @RequestParam(value = "code",required = false)String code,
+                                           @ApiParam(value = "类型(0 模板文件 1 其他)") @RequestParam(value = "type",required = false,defaultValue = "1")Integer type){
+        fileService.uploadFileAsync(file,name,code,type);
+        return getSuccessResult("请求成功",true);
     }
 
     @ApiOperation(value = "删除文件")

@@ -1,6 +1,5 @@
 package com.berg.system.service.system.impl;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.berg.dao.base.DSTransactional;
@@ -9,7 +8,7 @@ import com.berg.dao.system.sys.entity.QuartzJobTbl;
 import com.berg.dao.system.sys.service.QuartzJobTblDao;
 import com.berg.common.exception.FailException;
 import com.berg.common.exception.UserFriendException;
-import com.berg.system.auth.JWTUtil;
+import com.berg.system.service.AbstractService;
 import com.berg.system.service.system.QuartzJobService;
 import com.berg.vo.system.JobEditVo;
 import com.berg.vo.system.JobVo;
@@ -20,16 +19,13 @@ import org.quartz.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
 @Slf4j
 @Service
-public class QuartzJobServiceImpl implements QuartzJobService {
+public class QuartzJobServiceImpl extends AbstractService implements QuartzJobService {
 
-    @Autowired
-    JWTUtil jWTUtil;
     @Autowired
     Scheduler scheduler;
     @Autowired
@@ -93,7 +89,7 @@ public class QuartzJobServiceImpl implements QuartzJobService {
         if(quartzJobTblDao.count(queryClass)>0){
             throw new UserFriendException("任务类名已存在");
         }
-        String operator = jWTUtil.getUsername();
+        String operator = getUsername();
         LocalDateTime now = LocalDateTime.now();
         QuartzJobTbl quartzJobTbl = new QuartzJobTbl();
         BeanUtils.copyProperties(input, quartzJobTbl);
@@ -143,7 +139,7 @@ public class QuartzJobServiceImpl implements QuartzJobService {
     @DSTransactional
     @Override
     public void delJob(Integer id){
-        String operator = jWTUtil.getUsername();
+        String operator = getUsername();
         LocalDateTime now = LocalDateTime.now();
         QuartzJobTbl quartzJobTbl = quartzJobTblDao.getById(id);
         quartzJobTbl.setIsdel(1);
@@ -176,7 +172,7 @@ public class QuartzJobServiceImpl implements QuartzJobService {
     @DSTransactional
     @Override
     public void pauseJob(Integer id){
-        String operator = jWTUtil.getUsername();
+        String operator = getUsername();
         LocalDateTime now = LocalDateTime.now();
         QuartzJobTbl quartzJobTbl = quartzJobTblDao.getById(id);
         if(quartzJobTbl.getIsdel().equals(1)){
@@ -203,7 +199,7 @@ public class QuartzJobServiceImpl implements QuartzJobService {
     @DSTransactional
     @Override
     public void resumeJob(Integer id){
-        String operator = jWTUtil.getUsername();
+        String operator = getUsername();
         LocalDateTime now = LocalDateTime.now();
         QuartzJobTbl quartzJobTbl = quartzJobTblDao.getById(id);
         if(quartzJobTbl.getIsdel().equals(1)){

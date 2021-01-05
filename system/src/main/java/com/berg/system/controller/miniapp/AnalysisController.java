@@ -1,6 +1,6 @@
 package com.berg.system.controller.miniapp;
 
-import com.berg.common.base.BaseController;
+import com.berg.common.controller.AbstractController;
 import com.berg.common.constant.Result;
 import com.berg.system.service.miniapp.AnalysisService;
 import com.berg.vo.miniapp.*;
@@ -19,7 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/analysis")
 @Api(tags = "微信小程序数据分析")
-public class AnalysisController extends BaseController {
+public class AnalysisController extends AbstractController {
 
     @Autowired
     AnalysisService analysisService;

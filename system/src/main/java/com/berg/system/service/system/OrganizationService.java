@@ -11,6 +11,10 @@ public interface OrganizationService {
 
     OrganizationEditVo getOrganization(Integer id);
 
+    Integer addOrganization(OrganizationEditVo input);
+
+    Integer updateOrganization(OrganizationEditVo input);
+
     void operatorBatchOrganization(OperatorBatchOrganizationInVo input);
 
 }

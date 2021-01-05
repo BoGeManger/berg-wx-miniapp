@@ -9,6 +9,8 @@
         <result column="code" property="code" />
         <result column="path" property="path" />
         <result column="full_path" property="fullPath" />
+        <result column="type" property="type" />
+        <result column="status" property="status" />
         <result column="create_time" property="createTime" />
         <result column="create_user" property="createUser" />
         <result column="modify_time" property="modifyTime" />
@@ -16,12 +18,11 @@
         <result column="del_time" property="delTime" />
         <result column="del_user" property="delUser" />
         <result column="isdel" property="isdel" />
-        <result column="type" property="type" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, name, code, path, full_path, create_time, create_user, modify_time, modify_user, del_time, del_user, isdel, type
+        id, name, code, path, full_path, type, status, create_time, create_user, modify_time, modify_user, del_time, del_user, isdel
     </sql>
 
 </mapper>

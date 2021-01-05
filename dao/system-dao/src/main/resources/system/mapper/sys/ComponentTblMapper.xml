@@ -8,8 +8,6 @@
         <result column="parent_id" property="parentId" />
         <result column="name" property="name" />
         <result column="perms" property="perms" />
-        <result column="path" property="path" />
-        <result column="icon" property="icon" />
         <result column="remark" property="remark" />
         <result column="type" property="type" />
         <result column="no" property="no" />
@@ -24,7 +22,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, parent_id, name, perms, path, icon, remark, type, no, create_time, create_user, modify_time, modify_user, del_time, del_user, isdel
+        id, parent_id, name, perms, remark, type, no, create_time, create_user, modify_time, modify_user, del_time, del_user, isdel
     </sql>
 
     <select id="listUserPerms" resultType="java.lang.String">

@@ -1,6 +1,6 @@
 package com.berg.system.controller.system;
 
-import com.berg.common.base.BaseController;
+import com.berg.common.controller.AbstractController;
 import com.berg.dao.page.PageInfo;
 import com.berg.common.constant.Result;
 import com.berg.system.service.system.UserService;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/user")
 @Api(tags = "用户管理")
-public class UserController extends BaseController {
+public class UserController extends AbstractController {
 
     @Autowired
     UserService userService;

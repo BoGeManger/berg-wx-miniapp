@@ -2,25 +2,23 @@ package com.berg.miniapp.service.miniapp.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import com.berg.common.exception.FailException;
-import com.berg.miniapp.auth.JWTUtil;
-import com.berg.miniapp.service.base.BaseService;
+import com.berg.miniapp.service.AbstractService;
 import com.berg.miniapp.service.miniapp.CvImgService;
 import com.berg.vo.miniapp.out.MaAiCropOutVo;
 import com.berg.vo.miniapp.out.MaScanQRCodeOutVo;
 import com.berg.vo.miniapp.out.MaSuperresolutionOutVo;
-import com.berg.wx.miniapp.utils.WxMaUtil;
+import com.berg.wx.utils.WxMaUtil;
 import me.chanjar.weixin.common.bean.imgproc.WxImgProcAiCropResult;
 import me.chanjar.weixin.common.bean.imgproc.WxImgProcQrCodeResult;
 import me.chanjar.weixin.common.bean.imgproc.WxImgProcSuperResolutionResult;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 
 @Service
-public class CvImgServiceImpl extends BaseService implements CvImgService {
+public class CvImgServiceImpl extends AbstractService implements CvImgService {
 
     /**
      * 图片智能裁剪

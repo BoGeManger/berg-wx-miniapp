@@ -8,7 +8,7 @@ import com.berg.system.service.miniapp.AnalysisService;
 import com.berg.vo.miniapp.*;
 import com.berg.vo.miniapp.in.*;
 import com.berg.vo.miniapp.out.*;
-import com.berg.wx.miniapp.utils.WxMaUtil;
+import com.berg.wx.utils.WxMaUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 

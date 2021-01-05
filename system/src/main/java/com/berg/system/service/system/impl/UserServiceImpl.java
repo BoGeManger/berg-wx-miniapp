@@ -3,17 +3,19 @@ package com.berg.system.service.system.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.berg.common.constant.RedisKeyConstants;
+import com.berg.common.exception.UserFriendException;
 import com.berg.dao.base.DSTransactional;
 import com.berg.dao.system.sys.entity.UserComponentTbl;
+import com.berg.dao.system.sys.entity.UserOrganizationTbl;
 import com.berg.dao.system.sys.service.UserComponentTblDao;
 import com.berg.dao.system.sys.entity.UserRoleTbl;
 import com.berg.dao.system.sys.entity.UserTbl;
+import com.berg.dao.system.sys.service.UserOrganizationTblDao;
 import com.berg.dao.system.sys.service.UserRoleTblDao;
 import com.berg.dao.system.sys.service.UserTblDao;
 import com.berg.dao.page.PageInfo;
-import com.berg.common.exception.UserFriendException;
+import com.berg.system.service.AbstractService;
 import com.berg.system.service.system.UserService;
-import com.berg.system.auth.JWTUtil;
 import com.berg.vo.system.UserEditVo;
 import com.berg.vo.system.UserVo;
 import com.berg.vo.system.in.GetUserPageInVo;
@@ -29,16 +31,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends AbstractService implements UserService {
 
-    @Autowired
-    JWTUtil jWTUtil;
     @Autowired
     UserTblDao userTblDao;
     @Autowired
     UserRoleTblDao userRoleTblDao;
     @Autowired
     UserComponentTblDao userComponentTblDao;
+    @Autowired
+    UserOrganizationTblDao userOrganizationTblDao;
+
     @Autowired
     RedisTemplate<String, String> stringTemplate;
 
@@ -82,6 +85,10 @@ public class UserServiceImpl implements UserService {
                     .eq(UserComponentTbl::getIsdel, 0)
                     .eq(UserComponentTbl::getUserId, id);
             result.setComIds(userComponentTblDao.listObjs(comQuery));
+            LambdaQueryWrapper organizationQuery = new QueryWrapper<UserOrganizationTbl>().select("organization_id").lambda()
+                    .eq(UserOrganizationTbl::getIsdel, 0)
+                    .eq(UserOrganizationTbl::getUserId, id);
+            result.setOrganizationIds(userOrganizationTblDao.listObjs(organizationQuery));
         }
         return result;
     }
@@ -95,13 +102,16 @@ public class UserServiceImpl implements UserService {
     @DSTransactional
     @Override
     public Integer addUser(UserEditVo input) {
-        String operator = jWTUtil.getUsername();
+        String operator = super.getUsername();
         Integer userId = addOrUpdateUser(input, operator);
         if (input.getRoldIds().size() > 0) {
             addOrUpdateUserRole(userId, input.getRoldIds(), operator);
         }
         if(input.getComIds().size() > 0){
             addOrUpdateUserCom(userId,input.getComIds(),operator);
+        }
+        if(input.getOrganizationIds().size() > 0){
+            addOrUpdateOrganization(userId,input.getOrganizationIds(),operator);
         }
         return userId;
     }
@@ -115,13 +125,16 @@ public class UserServiceImpl implements UserService {
     @DSTransactional
     @Override
     public Integer updateUser(UserEditVo input) {
-        String operator = jWTUtil.getUsername();
+        String operator = super.getUsername();
         Integer userId = addOrUpdateUser(input, operator);
         if (input.getRoldIds().size() > 0) {
             addOrUpdateUserRole(userId, input.getRoldIds(), operator);
         }
         if(input.getComIds().size() > 0){
             addOrUpdateUserCom(userId,input.getComIds(),operator);
+        }
+        if(input.getOrganizationIds().size() > 0){
+            addOrUpdateOrganization(userId,input.getOrganizationIds(),operator);
         }
         delUserRoleCache(input.getUsername());
         return userId;
@@ -141,7 +154,7 @@ public class UserServiceImpl implements UserService {
                 throw new UserFriendException("该用户已被删除");
             }
             LocalDateTime now = LocalDateTime.now();
-            String operator = jWTUtil.getUsername();
+            String operator = super.getUsername();
             userTbl.setIsdel(1);
             userTbl.setDelTime(now);
             userTbl.setDelUser(operator);
@@ -173,6 +186,19 @@ public class UserServiceImpl implements UserService {
                 });
                 userComponentTblDao.updateBatchById(comUpdateList);
             }
+            //作废原有数据
+            LambdaQueryWrapper organizationQuery = new LambdaQueryWrapper<UserOrganizationTbl>()
+                    .eq(UserOrganizationTbl::getIsdel, 0)
+                    .eq(UserOrganizationTbl::getUserId, userTbl.getId());
+            List<UserOrganizationTbl> organizationUpdateList = userOrganizationTblDao.list(organizationQuery);
+            if (organizationUpdateList.size() > 0) {
+                organizationUpdateList.forEach(item -> {
+                    item.setIsdel(1);
+                    item.setDelTime(now);
+                    item.setDelUser(operator);
+                });
+                userOrganizationTblDao.updateBatchById(organizationUpdateList);
+            }
         }
     }
 
@@ -189,7 +215,7 @@ public class UserServiceImpl implements UserService {
                 throw new UserFriendException("该用户已被锁定");
             }
             LocalDateTime now = LocalDateTime.now();
-            String operator = jWTUtil.getUsername();
+            String operator = super.getUsername();
             userTbl.setIslock(1);
             userTbl.setLockTime(now);
             userTbl.setLockUser(operator);
@@ -210,7 +236,7 @@ public class UserServiceImpl implements UserService {
                 throw new UserFriendException("该用户已被删除");
             }
             LocalDateTime now = LocalDateTime.now();
-            String operator = jWTUtil.getUsername();
+            String operator = super.getUsername();
             userTbl.setIslock(0);
             userTbl.setLockTime(now);
             userTbl.setLockUser(operator);
@@ -234,7 +260,7 @@ public class UserServiceImpl implements UserService {
                 throw new UserFriendException("该用户已被删除");
             }
             LocalDateTime now = LocalDateTime.now();
-            String operator = jWTUtil.getUsername();
+            String operator = super.getUsername();
             userTbl.setPassword(DigestUtils.md5DigestAsHex(input.getPassword().getBytes()));
             userTbl.setModifyTime(now);
             userTbl.setModifyUser(operator);
@@ -257,8 +283,6 @@ public class UserServiceImpl implements UserService {
         UserTbl userTbl = new UserTbl();
         userTbl.setId(input.getId());
         userTbl.setRealname(input.getRealname());
-        userTbl.setOrganizationId(input.getOrganizationId());
-        userTbl.setOrganizationName(input.getOrganizationName());
         userTbl.setModifyTime(now);
         userTbl.setModifyUser(operator);
         if (isAdd) {
@@ -362,6 +386,41 @@ public class UserServiceImpl implements UserService {
             addList.add(userComponentTbl);
         });
         userComponentTblDao.saveBatch(addList);
+    }
+
+    /**
+     * 新增或修改用户组织信息
+     * @param userId
+     * @param organizationIds
+     * @param operator
+     */
+    void addOrUpdateOrganization(Integer userId, List<Integer> organizationIds, String operator){
+        LocalDateTime now = LocalDateTime.now();
+        LambdaQueryWrapper query = new LambdaQueryWrapper<UserOrganizationTbl>()
+                .eq(UserOrganizationTbl::getIsdel,0)
+                .eq(UserOrganizationTbl::getUserId,userId);
+        List<UserOrganizationTbl> updateList = userOrganizationTblDao.list(query);
+        //作废原有数据
+        if (updateList.size() > 0) {
+            updateList.forEach(item -> {
+                item.setIsdel(1);
+                item.setDelTime(now);
+                item.setDelUser(operator);
+            });
+            userOrganizationTblDao.updateBatchById(updateList);
+        }
+        List<UserOrganizationTbl> addList = new ArrayList<>();
+        //新增授权数据
+        organizationIds.forEach(item -> {
+            UserOrganizationTbl userOrganizationTbl = new UserOrganizationTbl();
+            userOrganizationTbl.setOrganizationId(item);
+            userOrganizationTbl.setUserId(userId);
+            userOrganizationTbl.setCreateTime(now);
+            userOrganizationTbl.setCreateUser(operator);
+            userOrganizationTbl.setIsdel(0);
+            addList.add(userOrganizationTbl);
+        });
+        userOrganizationTblDao.saveBatch(addList);
     }
 
     /**

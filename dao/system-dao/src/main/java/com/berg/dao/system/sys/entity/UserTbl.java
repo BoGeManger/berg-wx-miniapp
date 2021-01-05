@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
  * 系统用户信息表
  * </p>
  *
- * @author 
+ * @author
  * @since 2020-06-05
  */
 @Data
@@ -45,16 +45,6 @@ public class UserTbl implements Serializable {
      * 真实姓名
      */
     private String realname;
-
-    /**
-     * 所属组织id
-     */
-    private Integer organizationId;
-
-    /**
-     * 所属组织名称
-     */
-    private String organizationName;
 
     /**
      * 最后登录时间

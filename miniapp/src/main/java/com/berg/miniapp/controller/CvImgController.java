@@ -1,6 +1,6 @@
 package com.berg.miniapp.controller;
 
-import com.berg.common.base.BaseController;
+import com.berg.common.controller.AbstractController;
 import com.berg.common.constant.Result;
 import com.berg.miniapp.service.miniapp.CvImgService;
 import com.berg.vo.miniapp.out.MaAiCropOutVo;
@@ -17,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/cdImg")
 @Api(tags = "微信小程序图像处理")
-public class CvImgController extends BaseController {
+public class CvImgController extends AbstractController {
 
     @Autowired
     CvImgService cvImgService;

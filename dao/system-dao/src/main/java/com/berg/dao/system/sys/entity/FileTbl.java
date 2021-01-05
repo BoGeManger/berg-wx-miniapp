@@ -14,8 +14,8 @@ import lombok.experimental.Accessors;
  * 系统文件表
  * </p>
  *
- * @author 
- * @since 2020-06-10
+ * @author
+ * @since 2020-12-24
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -52,6 +52,16 @@ public class FileTbl implements Serializable {
     private String fullPath;
 
     /**
+     * 类型
+     */
+    private Integer type;
+
+    /**
+     * 状态(0 正在上传 1 已上传)
+     */
+    private Integer status;
+
+    /**
      * 创建时间
      */
     private LocalDateTime createTime;
@@ -85,11 +95,6 @@ public class FileTbl implements Serializable {
      * 是否删除(0 否,1 是)
      */
     private Integer isdel;
-
-    /**
-     * 类型(0 模板文件 1 其他)
-     */
-    private Integer type;
 
 
 }

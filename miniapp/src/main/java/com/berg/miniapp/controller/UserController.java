@@ -1,7 +1,7 @@
 package com.berg.miniapp.controller;
 
-import com.berg.common.base.BaseController;
 import com.berg.common.constant.Result;
+import com.berg.common.controller.AbstractController;
 import com.berg.miniapp.service.miniapp.UserService;
 import com.berg.vo.miniapp.in.MaSetUserInfoInVo;
 import com.berg.vo.miniapp.in.MaUserPhoneInVo;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/user")
 @Api(tags = "微信小程序用户")
-public class UserController extends BaseController {
+public class UserController extends AbstractController {
 
     @Autowired
     UserService userService;

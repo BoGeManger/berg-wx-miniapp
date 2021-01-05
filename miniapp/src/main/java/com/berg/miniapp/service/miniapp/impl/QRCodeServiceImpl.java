@@ -4,17 +4,16 @@ import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaCodeLineColor;
 import cn.hutool.json.JSONUtil;
 import com.berg.common.exception.FailException;
-import com.berg.miniapp.service.base.BaseService;
+import com.berg.miniapp.service.AbstractService;
 import com.berg.miniapp.service.miniapp.QRCodeService;
 import com.berg.vo.miniapp.in.MaCreateQRCodeInVo;
 import com.berg.vo.miniapp.in.MaQRCodeGetInVo;
 import com.berg.vo.miniapp.in.MaQRCodeGetUnlimitedInVo;
-import com.berg.wx.miniapp.utils.WxMaUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.berg.wx.utils.WxMaUtil;
 import org.springframework.stereotype.Service;
 
 @Service
-public class QRCodeServiceImpl extends BaseService implements QRCodeService {
+public class QRCodeServiceImpl extends AbstractService implements QRCodeService {
 
     /**
      * 获取小程序二维码,永久有效,有数量限制

@@ -3,8 +3,8 @@ package com.berg.system.service.system.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.berg.dao.system.sys.entity.OrganizationTbl;
 import com.berg.dao.system.sys.service.OrganizationTblDao;
+import com.berg.system.service.AbstractService;
 import com.berg.system.service.system.OrganizationService;
-import com.berg.system.auth.JWTUtil;
 import com.berg.vo.common.ListVo;
 import com.berg.vo.system.OperatorBatchOrganizationVo;
 import com.berg.vo.system.OrganizationEditVo;
@@ -19,10 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class OrganizationServiceImpl implements OrganizationService {
+public class OrganizationServiceImpl extends AbstractService implements OrganizationService {
 
-    @Autowired
-    JWTUtil jWTUtil;
     @Autowired
     OrganizationTblDao organizationTblDao;
 
@@ -42,7 +40,7 @@ public class OrganizationServiceImpl implements OrganizationService {
             OrganizationTreeVo tree = new OrganizationTreeVo();
             BeanUtils.copyProperties(item, tree);
             //添加子集
-            tree.setChilds(getOrganizationTreeChild(item.getId()));
+            tree.setChildren(getOrganizationTreeChild(item.getId()));
             list.add(tree);
         });
         result.setList(list);
@@ -64,7 +62,7 @@ public class OrganizationServiceImpl implements OrganizationService {
             OrganizationTreeVo tree = new OrganizationTreeVo();
             BeanUtils.copyProperties(item, tree);
             //递归获取子集
-            tree.setChilds(getOrganizationTreeChild(item.getId()));
+            tree.setChildren(getOrganizationTreeChild(item.getId()));
             result.add(tree);
         });
         return result;
@@ -81,6 +79,27 @@ public class OrganizationServiceImpl implements OrganizationService {
         return result;
     }
 
+    /**
+     * 新增组织
+     * @param input
+     * @return
+     */
+    @Override
+    public Integer addOrganization(OrganizationEditVo input){
+        String operator = super.getUsername();
+        return addOrUpdateOrganization(input,operator);
+    }
+
+    /**
+     * 修改组织
+     * @param input
+     * @return
+     */
+    @Override
+    public Integer updateOrganization(OrganizationEditVo input){
+        String operator = super.getUsername();
+        return addOrUpdateOrganization(input,operator);
+    }
 
     /**
      * 批量操作组织(新增,修改,删除)
@@ -88,7 +107,7 @@ public class OrganizationServiceImpl implements OrganizationService {
      */
     @Override
     public void operatorBatchOrganization(OperatorBatchOrganizationInVo input){
-        String operator = jWTUtil.getUsername();
+        String operator = super.getUsername();
         //新增或修改组件
         input.getOrganizations().forEach(item -> {
             Integer id = addOrUpdateOrganization(item, operator);
@@ -146,7 +165,7 @@ public class OrganizationServiceImpl implements OrganizationService {
      */
     public void delOrganization(Integer id){
         LocalDateTime now = LocalDateTime.now();
-        String operator = jWTUtil.getUsername();
+        String operator = super.getUsername();
         OrganizationTbl organizationTbl = new OrganizationTbl();
         organizationTbl.setDelTime(now);
         organizationTbl.setDelUser(operator);

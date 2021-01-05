@@ -16,14 +16,12 @@ public class ComponentTreeVo {
     String name;
     @ApiModelProperty(value = "权限标识")
     String perms;
-    @ApiModelProperty(value = "对应路由地址")
-    String path;
-    @ApiModelProperty(value = "图标")
-    String icon;
     @ApiModelProperty(value = "组件描述")
     String remark;
-    @ApiModelProperty(value = "组件类型(0=菜单,1=按钮)")
+    @ApiModelProperty(value = "组件类型(0 路由,1 按钮)")
     Integer type;
+    @ApiModelProperty(value = "路由信息")
+    RouterVo router;
     @ApiModelProperty(value = "子组件集合")
-    List<ComponentTreeVo> childs;
+    List<ComponentTreeVo> children;
 }

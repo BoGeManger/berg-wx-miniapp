@@ -29,5 +29,5 @@ public class OrganizationTreeVo {
     @ApiModelProperty(value = "更新人")
     String modifyUser;
     @ApiModelProperty(value = "子组织集合")
-    List<OrganizationTreeVo> childs;
+    List<OrganizationTreeVo> children;
 }

@@ -2,7 +2,7 @@ package com.berg.system.service.miniapp.impl;
 
 import com.berg.system.service.miniapp.AppService;
 import com.berg.vo.miniapp.MaAppVo;
-import com.berg.wx.miniapp.properties.WxMaProperties;
+import com.berg.wx.properties.WxMaProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

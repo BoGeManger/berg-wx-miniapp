@@ -6,11 +6,11 @@ import cn.binarywang.wx.miniapp.bean.WxMaSubscribeMessage;
 import cn.hutool.json.JSONUtil;
 import com.berg.common.constant.RedisKeyConstants;
 import com.berg.common.exception.FailException;
-import com.berg.miniapp.service.base.BaseService;
+import com.berg.miniapp.service.AbstractService;
 import com.berg.miniapp.service.miniapp.SubscribeMessageService;
 import com.berg.vo.miniapp.MaTemplateInfoVo;
 import com.berg.vo.miniapp.in.MaSendTemplateInVo;
-import com.berg.wx.miniapp.utils.WxMaUtil;
+import com.berg.wx.utils.WxMaUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Service
-public class SubscribeMessageServiceImpl extends BaseService implements SubscribeMessageService {
+public class SubscribeMessageServiceImpl extends AbstractService implements SubscribeMessageService {
 
     @Resource
     RedisTemplate<String, MaTemplateInfoVo> redisTemplate;
@@ -65,8 +65,8 @@ public class SubscribeMessageServiceImpl extends BaseService implements Subscrib
      */
     @Override
     public void send(MaSendTemplateInVo input) {
-        String appId = jWTUtil.getAppId();
-        String openId = jWTUtil.getOpenId();
+        String appId = getAppId();
+        String openId = getOpenId();
         try {
             WxMaService wxService = WxMaUtil.getService(appId);
             WxMaSubscribeMessage wxMaSubscribeMessage = new WxMaSubscribeMessage();

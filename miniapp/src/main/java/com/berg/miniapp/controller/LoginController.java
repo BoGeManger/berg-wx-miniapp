@@ -1,6 +1,6 @@
 package com.berg.miniapp.controller;
 
-import com.berg.common.base.BaseController;
+import com.berg.common.controller.AbstractController;
 import com.berg.common.constant.Result;
 import com.berg.miniapp.service.miniapp.LoginService;
 import com.berg.vo.miniapp.in.MaLoginInVo;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/login")
 @Api(tags = "微信小程序用户登录")
-public class LoginController extends BaseController {
+public class LoginController extends AbstractController {
 
     @Autowired
     LoginService loginService;

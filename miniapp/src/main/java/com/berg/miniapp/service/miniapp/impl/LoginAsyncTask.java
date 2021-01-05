@@ -1,10 +1,10 @@
 package com.berg.miniapp.service.miniapp.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.berg.auth.miniapp.auth.JWTToken;
 import com.berg.common.constant.RedisKeyConstants;
 import com.berg.dao.system.mb.entity.MaBindTbl;
 import com.berg.dao.system.mb.service.MaBindTblDao;
-import com.berg.miniapp.auth.JWTToken;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;

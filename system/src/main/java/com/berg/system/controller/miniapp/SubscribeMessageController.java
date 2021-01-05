@@ -1,6 +1,6 @@
 package com.berg.system.controller.miniapp;
 
-import com.berg.common.base.BaseController;
+import com.berg.common.controller.AbstractController;
 import com.berg.dao.page.PageInfo;
 import com.berg.common.constant.Result;
 import com.berg.system.service.miniapp.SubscribeMessageService;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/subscribeMessage")
 @Api(tags = "微信小程序订阅模板消息")
-public class SubscribeMessageController extends BaseController {
+public class SubscribeMessageController extends AbstractController {
 
     @Autowired
     SubscribeMessageService subscribeMessageService;

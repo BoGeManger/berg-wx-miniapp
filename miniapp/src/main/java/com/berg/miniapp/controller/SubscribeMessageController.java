@@ -1,6 +1,6 @@
 package com.berg.miniapp.controller;
 
-import com.berg.common.base.BaseController;
+import com.berg.common.controller.AbstractController;
 import com.berg.common.constant.Result;
 import com.berg.miniapp.service.miniapp.SubscribeMessageService;
 import com.berg.vo.miniapp.MaTemplateInfoVo;
@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/subscribeMessage")
 @Api(tags = "微信小程序订阅模板消息")
-public class SubscribeMessageController extends BaseController {
+public class SubscribeMessageController extends AbstractController {
 
     @Autowired
     SubscribeMessageService subscribeMessageService;

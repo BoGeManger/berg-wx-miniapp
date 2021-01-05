@@ -3,27 +3,27 @@ package com.berg.miniapp.service.miniapp.impl;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.berg.auth.miniapp.auth.JWTToken;
+import com.berg.auth.miniapp.constant.AuthConstants;
 import com.berg.dao.system.mb.entity.MaBindTbl;
 import com.berg.dao.system.mb.service.MaBindTblDao;
 import com.berg.common.exception.FailException;
-import com.berg.miniapp.auth.JWTToken;
-import com.berg.miniapp.constant.MiniappConstants;
-import com.berg.miniapp.service.base.BaseService;
+import com.berg.miniapp.service.AbstractService;
 import com.berg.miniapp.service.miniapp.LoginService;
 import com.berg.vo.miniapp.MaUserInfoVo;
 import com.berg.vo.miniapp.in.MaLoginInVo;
 import com.berg.vo.miniapp.in.MaRefreshInVo;
 import com.berg.vo.miniapp.out.MaLoginOutVo;
-import com.berg.wx.miniapp.utils.WxMaUtil;
+import com.berg.wx.utils.WxMaUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LoginServiceImpl extends BaseService implements LoginService{
+public class LoginServiceImpl extends AbstractService implements LoginService{
 
     @Autowired
-    MiniappConstants miniappConstants;
+    AuthConstants authConstants;
 
     @Autowired
     LoginAsyncTask loginAsyncTask;
@@ -64,10 +64,10 @@ public class LoginServiceImpl extends BaseService implements LoginService{
             session = getSession(appId,input.getCode());
         }else{
             //删除已有token缓存信息
-            loginAsyncTask.delTokenCache(jWTUtil.getToken());
-            session.setSessionKey(jWTUtil.getSessionKey());
-            session.setOpenid(jWTUtil.getOpenId());
-            session.setUnionid(jWTUtil.getUnionId());
+            loginAsyncTask.delTokenCache(getToken());
+            session.setSessionKey(getSessionKey());
+            session.setOpenid(getOpenId());
+            session.setUnionid(getUnionId());
         }
         MaLoginOutVo result = setMaLoginOutVo(appId,session.getOpenid(),session.getUnionid(),session.getSessionKey());
         //生成JWT
@@ -141,9 +141,9 @@ public class LoginServiceImpl extends BaseService implements LoginService{
      * @return
      */
     JWTToken getJwt(MaLoginOutVo input) {
-        String token = jWTUtil.DES.encryptHex(jWTUtil.sign(input.getAppId(),input.getOpenId(),input.getUnionId(), input.getMemberId()
+        String token = authenticationUtil.DES.encryptHex(authenticationUtil.sign(input.getAppId(),input.getOpenId(),input.getUnionId(), input.getMemberId()
                 ,input.getMaBindId(),input.getCreateTime(),input.getModifyTime(),input.getUserinfo(),input.getSessionKey()));
-        return new JWTToken(token, input.getAppId(),input.getOpenId(),miniappConstants.getExpireTime());
+        return new JWTToken(token, input.getAppId(),input.getOpenId(),authConstants.getExpireTime());
     }
 
     /**
@@ -151,6 +151,6 @@ public class LoginServiceImpl extends BaseService implements LoginService{
      */
     @Override
     public void logout(){
-        loginAsyncTask.delTokenCache(jWTUtil.getToken());
+        loginAsyncTask.delTokenCache(getToken());
     }
 }

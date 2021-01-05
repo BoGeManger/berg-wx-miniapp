@@ -1,6 +1,6 @@
 package com.berg.system.controller.system;
 
-import com.berg.common.base.BaseController;
+import com.berg.common.controller.AbstractController;
 import com.berg.dao.page.PageInfo;
 import com.berg.common.constant.Result;
 import com.berg.system.service.system.RoleService;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/role")
 @Api(tags = "角色管理")
-public class RoleController  extends BaseController {
+public class RoleController  extends AbstractController {
 
     @Autowired
     RoleService roleService;

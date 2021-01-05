@@ -4,18 +4,17 @@ import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaPhoneNumberInfo;
 import com.berg.common.exception.FailException;
 import com.berg.common.exception.ParamException;
-import com.berg.miniapp.auth.JWTUtil;
-import com.berg.miniapp.service.base.BaseService;
+import com.berg.miniapp.service.AbstractService;
 import com.berg.miniapp.service.miniapp.UserService;
 import com.berg.vo.miniapp.in.MaSetUserInfoInVo;
 import com.berg.vo.miniapp.in.MaUserPhoneInVo;
 import com.berg.vo.miniapp.out.MaUserPhoneOutVo;
-import com.berg.wx.miniapp.utils.WxMaUtil;
+import com.berg.wx.utils.WxMaUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserServiceImpl extends BaseService implements UserService {
+public class UserServiceImpl extends AbstractService implements UserService {
 
     @Autowired
     UserAsyncTask userAsyncTask;
@@ -28,9 +27,9 @@ public class UserServiceImpl extends BaseService implements UserService {
     @Override
     public MaUserPhoneOutVo phone(MaUserPhoneInVo input){
         MaUserPhoneOutVo result = new MaUserPhoneOutVo();
-        String appId = jWTUtil.getAppId();
-        String openId = jWTUtil.getOpenId();
-        String sessionKey = jWTUtil.getSessionKey();
+        String appId = getAppId();
+        String openId = getOpenId();
+        String sessionKey = getSessionKey();
         try{
             WxMaService wxService = WxMaUtil.getService(appId);
             // 用户信息校验
@@ -54,8 +53,8 @@ public class UserServiceImpl extends BaseService implements UserService {
      */
     @Override
     public void setUserInfo(MaSetUserInfoInVo input){
-        String appId = jWTUtil.getAppId();
-        String openId = jWTUtil.getOpenId();
+        String appId = getAppId();
+        String openId = getOpenId();
         userAsyncTask.updateMaBindByUserInfo(appId,openId,input);
     }
 }

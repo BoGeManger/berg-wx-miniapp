@@ -3,7 +3,7 @@ package com.berg.miniapp.service.miniapp.impl;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.message.WxMaMessageRouter;
 import com.berg.miniapp.handler.*;
-import com.berg.wx.miniapp.service.WxMaMessageRouterService;
+import com.berg.wx.service.WxMaMessageRouterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

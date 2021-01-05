@@ -12,5 +12,7 @@ public interface FileService {
 
     FilePathVo uploadFile(MultipartFile file, String name, String code,Integer type);
 
+    void uploadFileAsync(MultipartFile file, String name, String code, Integer type);
+
     void delFileByName(String name);
 }

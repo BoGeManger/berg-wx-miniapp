@@ -1,5 +1,6 @@
 package com.berg.system.service.system.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.berg.common.MinioUtil;
@@ -8,7 +9,7 @@ import com.berg.common.exception.FailException;
 import com.berg.dao.page.PageInfo;
 import com.berg.dao.system.sys.entity.FileTbl;
 import com.berg.dao.system.sys.service.FileTblDao;
-import com.berg.system.auth.JWTUtil;
+import com.berg.system.service.AbstractService;
 import com.berg.system.service.system.FileService;
 import com.berg.vo.system.FilePathVo;
 import com.berg.vo.system.FileVo;
@@ -21,10 +22,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDateTime;
 
 @Service
-public class FileServiceImpl  implements FileService {
+public class FileServiceImpl extends AbstractService implements FileService {
 
-    @Autowired
-    JWTUtil jWTUtil;
     @Autowired
     FileAsyncTask fileAsyncTask;
 
@@ -65,7 +64,7 @@ public class FileServiceImpl  implements FileService {
      */
     @Override
     public FilePathVo uploadFile(MultipartFile file, String name, String code, Integer type){
-        String operator = jWTUtil.getUsername();
+        String operator = super.getUsername();
         FilePathVo result = new FilePathVo();
         String url ="";
         try{
@@ -76,8 +75,59 @@ public class FileServiceImpl  implements FileService {
         result.setFullPath(url);
         result.setPath(url.replace(MinioUtil.getMinioUrl(),""));
         result.setName(name);
-        fileAsyncTask.uploadFile(result,name,code,type,operator);
+        addOrUpdateFile(result,name,code,type,1,operator);
         return  result;
+    }
+
+    /**
+     * 异步上传文件
+     * @param file
+     * @param name
+     * @param code
+     * @param type
+     */
+    @Override
+    public void uploadFileAsync(MultipartFile file, String name, String code, Integer type){
+        String operator = super.getUsername();
+        Integer id = addOrUpdateFile(new FilePathVo(),name,code,type,0,operator);
+        fileAsyncTask.uploadFile(file,name,id,operator);
+    }
+
+    /**
+     * 新增或修改文件
+     * @param filevo
+     * @param name
+     * @param code
+     * @param type
+     * @param user
+     */
+    Integer addOrUpdateFile(FilePathVo filevo, String name, String code, Integer type,Integer status, String user){
+        LocalDateTime now = LocalDateTime.now();
+        Boolean isAdd = true;
+        LambdaQueryWrapper query = new LambdaQueryWrapper<FileTbl>().eq(FileTbl::getName,name);
+        FileTbl fileTbl = fileTblDao.getOne(query);
+        if(fileTbl!=null){
+            isAdd = false;
+        }else{
+            fileTbl = new FileTbl();
+            fileTbl.setName(name);
+            fileTbl.setCreateTime(now);
+            fileTbl.setCreateUser(user);
+        }
+        fileTbl.setStatus(status);
+        fileTbl.setModifyTime(now);
+        fileTbl.setModifyUser(user);
+        fileTbl.setCode(code);
+        fileTbl.setPath(filevo.getPath());
+        fileTbl.setFullPath(filevo.getFullPath());
+        fileTbl.setType(type);
+        fileTbl.setIsdel(0);
+        if(isAdd){
+            fileTblDao.save(fileTbl);
+        }else {
+            fileTblDao.updateById(fileTbl);
+        }
+        return fileTbl.getId();
     }
 
     /**
@@ -93,7 +143,7 @@ public class FileServiceImpl  implements FileService {
             throw new FailException("删除文件失败："+ex.getMessage());
         }
         LocalDateTime now = LocalDateTime.now();
-        String operator = jWTUtil.getUsername();
+        String operator = super.getUsername();
         FileTbl fileTbl = new FileTbl();
         fileTbl.setIsdel(1);
         fileTbl.setDelUser(operator);
