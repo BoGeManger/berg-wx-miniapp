@@ -10,9 +10,9 @@ import com.baomidou.mybatisplus.core.toolkit.Assert;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.berg.dao.page.PageHelper;
 import com.berg.vo.common.PageInVo;
 import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import com.berg.dao.page.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.binding.MapperMethod;
@@ -256,6 +256,28 @@ public abstract class ServiceImpl<M extends BaseMapper<T>, T> extends com.baomid
         Page page = PageHelper.startPage(pageIndex, pageSize);
         List<E> list = function.get();
         PageInfo<E> pageInfo = new PageInfo<E>(page);
+        pageInfo.setList(list);
+        return pageInfo;
+    }
+
+    @Override
+    public <I extends PageInVo,E> PageInfo<E> page(I input,int total, Supplier<List<E>> function) {
+        Page page = PageHelper.startPage(input.getPageIndex(), input.getPageSize(),false);
+        List<E> list = function.get();
+        page.setPages((total + input.getPageSize() - 1) / input.getPageSize());
+        page.setTotal(total);
+        PageInfo<E> pageInfo = new PageInfo<>(page);
+        pageInfo.setList(list);
+        return pageInfo;
+    }
+
+    @Override
+    public <E> PageInfo<E> page(int pageIndex,int pageSize,int total,Supplier<List<E>> function) {
+        Page page = PageHelper.startPage(pageIndex, pageSize,false);
+        List<E> list = function.get();
+        page.setPages((total + pageSize - 1) / pageSize);
+        page.setTotal(total);
+        PageInfo<E> pageInfo = new PageInfo<>(page);
         pageInfo.setList(list);
         return pageInfo;
     }

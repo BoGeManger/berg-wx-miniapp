@@ -65,4 +65,8 @@ public interface IService<T>  extends com.baomidou.mybatisplus.extension.service
     <I extends PageInVo,E> PageInfo<E> page(I input, Supplier<List<E>> function);
 
     <E> PageInfo<E> page(int pageIndex,int pageSize, Supplier<List<E>> function);
+
+    <I extends PageInVo,E> PageInfo<E> page(I input,int total, Supplier<List<E>> function);
+
+    <E> PageInfo<E> page(int pageIndex,int pageSize,int total,Supplier<List<E>> function);
 }
