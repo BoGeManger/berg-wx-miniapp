@@ -21,13 +21,12 @@
 
     <modules>
         <module>common</module>
-        <module>model</module>
+        <module>generator</module>
         <module>dao</module>
-
-        <module>wx</module>
-        <module>system</module>
-        <module>miniapp</module>
+        <module>model</module>
         <module>manager</module>
+        <module>wx</module>
+        <module>modules</module>
     </modules>
 
     <properties>

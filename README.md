@@ -5,22 +5,30 @@
 ### 目录结构
 ├── common 公共应用<br>
 │   ├─ all-common 公共应用所有引用<br>
-│   ├─ application 基础服务应用<br>
+│   ├─ base-application 基础服务应用<br>
 │   ├─ minio 文件<br>
 │   ├─ quartz 定时任务<br>
 │   ├─ redis 缓存<br>
-│   └─ util 工具<br>
+│   ├─ util 工具<br>
+│   └─ validator 自定义校验工具<br>
 ├── dao 数据交互<br>
 │   ├─ all-dao 数据交互所有引用<br>
 │   ├─ base-dao 基础数据交互引用<br>
 │   └─ system-dao 后台系统数据交互<br>
+├── generator 代码生成<br>
+│   ├─ base-generator 基础代码生成引用<br>
+│   └─ generator-modules 代码生成模块<br>
 ├── manager 公共管理层<br>
 │   ├─ miniapp-auth 微信小程序服务授权<br>
 │   └─ system-auth 后台服务授权<br>
-├── miniapp 微信小程序服务<br>
-├── model 实体层<br>
+├── model 公共实体层<br>
+│   ├─ all-model 所有实体引用<br>
+│   ├─ mapstruct 实体映射层<br>
+│   └─ vo 表现层对象<br>
+├── modules 业务模块层<br>
+│   ├─ miniapp 微信小程序服务<br>
+│   └─ system 后台服务<br>
 ├── sql 数据脚本<br>
-├── system 后台服务<br>
 └── wx 微信基础层<br>
 &nbsp;&nbsp; &nbsp;├─ all-wx 微信基础层所有引用<br>
 &nbsp;&nbsp; &nbsp;├─ wx-cp 微信企业号<br>

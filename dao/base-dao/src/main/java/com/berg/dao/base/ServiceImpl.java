@@ -78,6 +78,11 @@ public abstract class ServiceImpl<M extends BaseMapper<T>, T> extends com.baomid
     }
     //endregion
 
+    /**
+     * 根据ID是否为0进行新增或修改
+     * @param entity
+     * @return
+     */
     @Override
     public boolean saveOrUpdateById(T entity) {
         if (null != entity) {
@@ -106,6 +111,12 @@ public abstract class ServiceImpl<M extends BaseMapper<T>, T> extends com.baomid
         return false;
     }
 
+    /**
+     * 根据ID是否为0进行批量新增或修改
+     * @param entityList
+     * @param batchSize
+     * @return
+     */
     @Override
     public boolean saveOrUpdateBatchById(Collection<T> entityList, int batchSize) {
         TableInfo tableInfo = TableInfoHelper.getTableInfo(entityClass);
@@ -134,6 +145,13 @@ public abstract class ServiceImpl<M extends BaseMapper<T>, T> extends com.baomid
         });
     }
 
+    /**
+     * 根据ID查询，并使用BeanUtils实体转换
+     * @param id
+     * @param cls
+     * @param <E>
+     * @return
+     */
     @Override
     public <E> E getById(java.io.Serializable id,Class<E> cls){
         E target = null;
@@ -149,6 +167,13 @@ public abstract class ServiceImpl<M extends BaseMapper<T>, T> extends com.baomid
         return target;
     }
 
+    /**
+     * 根据 Wrapper，查询一条记录，并使用BeanUtils实体转换(不推荐使用)
+     * @param queryWrapper
+     * @param cls
+     * @param <E>
+     * @return
+     */
     @Override
     public <E> E getOne(Wrapper<T> queryWrapper,Class<E> cls){
         E target = null;
@@ -164,6 +189,11 @@ public abstract class ServiceImpl<M extends BaseMapper<T>, T> extends com.baomid
         return target;
     }
 
+    /**
+     * 根据 Wrapper，查询一条记录(解决getOne数据库存在多条数据报错，推荐使用)
+     * @param queryWrapper
+     * @return
+     */
     @Override
     public T getOneLimit(QueryWrapper<T> queryWrapper){
         queryWrapper.last("limit 1");
@@ -171,6 +201,11 @@ public abstract class ServiceImpl<M extends BaseMapper<T>, T> extends com.baomid
         return entity;
     }
 
+    /**
+     * 根据 Wrapper，查询一条记录(解决getOne数据库存在多条数据报错，推荐使用)
+     * @param queryWrapper
+     * @return
+     */
     @Override
     public T getOneLimit(LambdaQueryWrapper<T> queryWrapper){
         queryWrapper.last("limit 1");
@@ -178,6 +213,13 @@ public abstract class ServiceImpl<M extends BaseMapper<T>, T> extends com.baomid
         return entity;
     }
 
+    /**
+     * 根据 Wrapper，查询一条记录，并使用BeanUtils实体转换(解决getOne数据库存在多条数据报错，推荐使用)
+     * @param queryWrapper
+     * @param cls
+     * @param <E>
+     * @return
+     */
     @Override
     public <E> E getOneLimit(QueryWrapper<T> queryWrapper,Class<E> cls){
         E target = null;
@@ -194,6 +236,13 @@ public abstract class ServiceImpl<M extends BaseMapper<T>, T> extends com.baomid
         return target;
     }
 
+    /**
+     * 根据 Wrapper，查询一条记录，并使用BeanUtils实体转换(解决getOne数据库存在多条数据报错，推荐使用)
+     * @param queryWrapper
+     * @param cls
+     * @param <E>
+     * @return
+     */
     @Override
     public <E> E getOneLimit(LambdaQueryWrapper<T> queryWrapper,Class<E> cls){
         E target = null;
@@ -210,6 +259,12 @@ public abstract class ServiceImpl<M extends BaseMapper<T>, T> extends com.baomid
         return target;
     }
 
+    /**
+     * 查询所有，并使用BeanUtils实体转换
+     * @param cls
+     * @param <E>
+     * @return
+     */
     @Override
     public <E> List<E> list(Class<E> cls){
         List<E> target = new ArrayList<>();
@@ -226,6 +281,13 @@ public abstract class ServiceImpl<M extends BaseMapper<T>, T> extends com.baomid
         return target;
     }
 
+    /**
+     * 查询列表，并使用BeanUtils实体转换
+     * @param queryWrapper
+     * @param cls
+     * @param <E>
+     * @return
+     */
     @Override
     public <E> List<E> list(Wrapper<T> queryWrapper,Class<E> cls){
         List<E> target = new ArrayList<>();
@@ -242,6 +304,14 @@ public abstract class ServiceImpl<M extends BaseMapper<T>, T> extends com.baomid
         return target;
     }
 
+    /**
+     * 分页查询
+     * @param input
+     * @param function
+     * @param <I>
+     * @param <E>
+     * @return
+     */
     @Override
     public <I extends PageInVo,E> PageInfo<E> page(I input, Supplier<List<E>> function) {
         Page page = PageHelper.startPage(input.getPageIndex(), input.getPageSize());
@@ -251,6 +321,14 @@ public abstract class ServiceImpl<M extends BaseMapper<T>, T> extends com.baomid
         return pageInfo;
     }
 
+    /**
+     * 分页查询
+     * @param pageIndex
+     * @param pageSize
+     * @param function
+     * @param <E>
+     * @return
+     */
     @Override
     public <E> PageInfo<E> page(int pageIndex,int pageSize, Supplier<List<E>> function) {
         Page page = PageHelper.startPage(pageIndex, pageSize);
@@ -260,6 +338,15 @@ public abstract class ServiceImpl<M extends BaseMapper<T>, T> extends com.baomid
         return pageInfo;
     }
 
+    /**
+     * 分页查询自定义total，数据库不执行count查询
+     * @param input
+     * @param total
+     * @param function
+     * @param <I>
+     * @param <E>
+     * @return
+     */
     @Override
     public <I extends PageInVo,E> PageInfo<E> page(I input,int total, Supplier<List<E>> function) {
         Page page = PageHelper.startPage(input.getPageIndex(), input.getPageSize(),false);
@@ -271,6 +358,15 @@ public abstract class ServiceImpl<M extends BaseMapper<T>, T> extends com.baomid
         return pageInfo;
     }
 
+    /**
+     * 分页查询自定义total，数据库不执行count查询
+     * @param pageIndex
+     * @param pageSize
+     * @param total
+     * @param function
+     * @param <E>
+     * @return
+     */
     @Override
     public <E> PageInfo<E> page(int pageIndex,int pageSize,int total,Supplier<List<E>> function) {
         Page page = PageHelper.startPage(pageIndex, pageSize,false);
