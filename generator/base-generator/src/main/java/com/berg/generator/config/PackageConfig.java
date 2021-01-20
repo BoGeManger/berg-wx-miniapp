@@ -57,7 +57,7 @@ public class PackageConfig {
     /**
      * Mapper XML包名
      */
-    private String xml = "mapper.xml";
+    private String xml = "";
     /**
      * Controller包名
      */
@@ -82,7 +82,10 @@ public class PackageConfig {
      * DaoImpl包名
      */
     private String daoImpl = "service.impl";
-
+    /**
+     * 模块标识
+     */
+    private String parentModuleName;
     /**
      * 路径配置信息
      */

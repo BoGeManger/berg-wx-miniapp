@@ -16,9 +16,9 @@ public class GeneratorConfig{
 
     //region 输出配置
     //是否仅输出模版文本(默认false)
-    public final static Boolean ONLYSTR= true;
+    public final static Boolean ONLYSTR= false;
     //是否文件覆盖(默认false)
-    public final static Boolean FILE_OVERRIDE = true;
+    public final static Boolean FILE_OVERRIDE = false;
 
     //是否输出Entity(默认true)
     public final static Boolean GENERATE_ENTITY = true;
@@ -31,7 +31,7 @@ public class GeneratorConfig{
     //是否输出Xml(默认true)
     public final static Boolean GENERATE_XML = true;
     //是否输出业务逻辑(包含Controller,Vo,EditVo,PageInVo,Service,ServiceImpl,单表结构增删改查,默认false)
-    public final static Boolean GENERATE_BUSINESS = true;
+    public final static Boolean GENERATE_BUSINESS = false;
     //endregion
 
     //region 输出模块配置

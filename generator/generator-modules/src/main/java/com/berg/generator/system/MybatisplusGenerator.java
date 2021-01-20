@@ -41,6 +41,7 @@ public class MybatisplusGenerator extends AbstractGenerator {
         }
         // 包配置
         PackageConfig pc = new PackageConfig();
+        pc.setParentModuleName(GeneratorConfig.PARENT_MODULE_NAME);
         pc.setParent("com.berg.dao." + GeneratorConfig.PARENT_MODULE_NAME);
         if (GeneratorConfig.GENERATE_MODULE) {
             pc.setModuleName(scanner("模块名"));

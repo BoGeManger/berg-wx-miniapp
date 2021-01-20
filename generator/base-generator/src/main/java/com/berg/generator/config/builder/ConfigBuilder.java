@@ -33,6 +33,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -228,7 +229,7 @@ public class ConfigBuilder {
         packageInfo.put(ConstVal.MODULE_NAME, config.getModuleName());
         packageInfo.put(ConstVal.ENTITY, joinPackage(config.getParent(), config.getEntity()));
         packageInfo.put(ConstVal.MAPPER, joinPackage(config.getParent(), config.getMapper()));
-        packageInfo.put(ConstVal.XML, joinPackage(config.getParent(), config.getXml()));
+        packageInfo.put(ConstVal.XML, joinResourcesPackage(config.getParentModuleName(),config.getModuleName(),config.getXml()));
         packageInfo.put(ConstVal.SERVICE, joinPackage(config.getParent(), config.getService()));
         packageInfo.put(ConstVal.SERVICE_IMPL, joinPackage(config.getParent(), config.getServiceImpl()));
         packageInfo.put(ConstVal.CONTROLLER, joinPackage(config.getParent(), config.getController()));
@@ -247,7 +248,7 @@ public class ConfigBuilder {
             pathInfo = new HashMap<>(10);
             setPathInfo(pathInfo, template.getEntity(), outputDir, ConstVal.ENTITY_PATH, ConstVal.ENTITY);
             setPathInfo(pathInfo, template.getMapper(), outputDir, ConstVal.MAPPER_PATH, ConstVal.MAPPER);
-            setPathInfo(pathInfo, template.getXml(), outputDir, ConstVal.XML_PATH, ConstVal.XML);
+            setPathInfo(pathInfo, template.getXml(), outputDir.replace("java","resources"), ConstVal.XML_PATH, ConstVal.XML);
             setPathInfo(pathInfo, template.getService(), outputDir, ConstVal.SERVICE_PATH, ConstVal.SERVICE);
             setPathInfo(pathInfo, template.getServiceImpl(), outputDir, ConstVal.SERVICE_IMPL_PATH, ConstVal.SERVICE_IMPL);
             setPathInfo(pathInfo, template.getController(), outputDir, ConstVal.CONTROLLER_PATH, ConstVal.CONTROLLER);
@@ -429,7 +430,7 @@ public class ConfigBuilder {
             tableInfo.getImportPackages().add(com.baomidou.mybatisplus.annotation.TableId.class.getCanonicalName());
         }
         if (StringUtils.isNotBlank(strategyConfig.getVersionFieldName())
-            && CollectionUtils.isNotEmpty(tableInfo.getFields())) {
+                && CollectionUtils.isNotEmpty(tableInfo.getFields())) {
             tableInfo.getFields().forEach(f -> {
                 if (strategyConfig.getVersionFieldName().equals(f.getName())) {
                     tableInfo.getImportPackages().add(com.baomidou.mybatisplus.annotation.Version.class.getCanonicalName());
@@ -506,10 +507,10 @@ public class ConfigBuilder {
                 }
                 if (isInclude) {
                     sql.append(" AND ").append(dbQuery.tableName()).append(" IN (")
-                        .append(Arrays.stream(config.getInclude()).map(tb -> "'" + tb + "'").collect(Collectors.joining(","))).append(")");
+                            .append(Arrays.stream(config.getInclude()).map(tb -> "'" + tb + "'").collect(Collectors.joining(","))).append(")");
                 } else if (isExclude) {
                     sql.append(" AND ").append(dbQuery.tableName()).append(" NOT IN (")
-                        .append(Arrays.stream(config.getExclude()).map(tb -> "'" + tb + "'").collect(Collectors.joining(","))).append(")");
+                            .append(Arrays.stream(config.getExclude()).map(tb -> "'" + tb + "'").collect(Collectors.joining(","))).append(")");
                 }
             }
             TableInfo tableInfo;
@@ -595,7 +596,7 @@ public class ConfigBuilder {
      */
     private boolean tableNameMatches(String setTableName, String dbTableName) {
         return setTableName.equalsIgnoreCase(dbTableName)
-            || StringUtils.matches(setTableName, dbTableName);
+                || StringUtils.matches(setTableName, dbTableName);
     }
 
     /**
@@ -641,8 +642,8 @@ public class ConfigBuilder {
                 tableFieldsSql = String.format(tableFieldsSql, tableName);
             }
             try (
-                PreparedStatement preparedStatement = connection.prepareStatement(tableFieldsSql);
-                ResultSet results = preparedStatement.executeQuery()) {
+                    PreparedStatement preparedStatement = connection.prepareStatement(tableFieldsSql);
+                    ResultSet results = preparedStatement.executeQuery()) {
                 while (results.next()) {
                     TableField field = new TableField();
                     String columnName = results.getString(dbQuery.fieldName());
@@ -706,7 +707,7 @@ public class ConfigBuilder {
                     if (null != tableFillList) {
                         // 忽略大写字段问题
                         tableFillList.stream().filter(tf -> tf.getFieldName().equalsIgnoreCase(field.getName()))
-                            .findFirst().ifPresent(tf -> field.setFill(tf.getFieldFill().name()));
+                                .findFirst().ifPresent(tf -> field.setFill(tf.getFieldFill().name()));
                     }
                     if (strategyConfig.includeSuperEntityColumns(field.getName())) {
                         // 跳过公共字段
@@ -758,6 +759,20 @@ public class ConfigBuilder {
             return subPackage;
         }
         return parent + StringPool.DOT + subPackage;
+    }
+
+    /**
+     * 连接静态文件父子包名
+     * @param parentModuleName 父模块名
+     * @param moduleName 子模块名
+     * @param subPackage 连接后的包名
+     * @return
+     */
+    private String joinResourcesPackage(String parentModuleName,String moduleName,String subPackage){
+        if (StringUtils.isBlank(moduleName)) {
+            return parentModuleName + StringPool.DOT + "mapper" + StringPool.DOT + subPackage;
+        }
+        return parentModuleName + StringPool.DOT + "mapper" + StringPool.DOT +moduleName+ StringPool.DOT + subPackage;
     }
 
 
