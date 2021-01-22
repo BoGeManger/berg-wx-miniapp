@@ -1,9 +1,10 @@
 package com.berg.generator.system;
 
+import com.baomidou.mybatisplus.annotation.DbType;
+import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.berg.generator.AbstractGenerator;
 import com.berg.generator.AutoGenerator;
 import com.berg.generator.config.*;
-import com.berg.generator.config.rules.NamingStrategy;
 import com.berg.generator.engine.FreemarkerTemplateEngine;
 import com.berg.generator.system.config.GeneratorConfig;
 
@@ -36,25 +37,25 @@ public class MybatisplusGenerator extends AbstractGenerator {
         dsc.setDriverName(GeneratorConfig.DRIVER_NAME);
         dsc.setUsername(GeneratorConfig.USER_NAME);
         dsc.setPassword(GeneratorConfig.PASSWORD);
-        if (GeneratorConfig.DRIVER.equals("postgresql")) {//postgresql使用
+        if (GeneratorConfig.DBTYPE == DbType.POSTGRE_SQL) {//postgresql使用
             dsc.setSchemaName(GeneratorConfig.SCHEMA_NAME);
         }
         // 包配置
         PackageConfig pc = new PackageConfig();
         pc.setParentModuleName(GeneratorConfig.PARENT_MODULE_NAME);
-        pc.setParent("com.berg.dao." + GeneratorConfig.PARENT_MODULE_NAME);
+        pc.setParent(GeneratorConfig.BASE_MODULE_NAME + StringPool.DOT + GeneratorConfig.PARENT_MODULE_NAME);
         if (GeneratorConfig.GENERATE_MODULE) {
             pc.setModuleName(scanner("模块名"));
         }
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
-        strategy.setNaming(NamingStrategy.underline_to_camel);
-        strategy.setColumnNaming(NamingStrategy.underline_to_camel);
+        strategy.setNaming(GeneratorConfig.NAMING);
+        strategy.setColumnNaming(GeneratorConfig.COLUMN_NAMING);
         strategy.setEntityLombokModel(true);
         strategy.setChainModel(true);
-        strategy.setInclude(scanner("表名，多个英文逗号分割").split(","));
+        strategy.setInclude(scanner("表名，多个英文逗号分割").split(StringPool.COMMA));
         strategy.setControllerMappingHyphenStyle(true);
-        strategy.setTablePrefix(pc.getModuleName() + "_");
+        strategy.setTablePrefix(pc.getModuleName() + StringPool.UNDERSCORE);
         if (!GeneratorConfig.FILTER_MODULE_NAME) {//不启用名称模块过滤
             strategy.setTablePrefix("");
         }

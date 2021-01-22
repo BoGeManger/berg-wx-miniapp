@@ -1,12 +1,19 @@
 package com.berg.generator.system.config;
 
+import com.baomidou.mybatisplus.annotation.DbType;
 import com.berg.dao.constant.DataSource;
+import com.berg.generator.config.rules.NamingStrategy;
 
+/**
+ * 生成配置
+ */
 public class GeneratorConfig{
 
     //模块路径
     public final static String PATH = "/dao/system-dao/src/main/java";
 
+    //基础模块包
+    public final static String BASE_MODULE_NAME= "com.berg.dao";
     //region 多数据源标识配置
     //数据库主模块名称
     public final static String PARENT_MODULE_NAME = DataSource.SYSTEM;
@@ -43,7 +50,7 @@ public class GeneratorConfig{
 
     //region 数据库配置
     //数据库类型
-    public final static String DRIVER = "mysql";
+    public final static DbType DBTYPE = DbType.MYSQL;
     //数据库访问地址
     public final static String URL = "jdbc:mysql://localhost:3306/miniappdb?useUnicode=true&serverTimezone=GMT&useSSL=false&characterEncoding=utf8";
     //数据库驱动
@@ -54,5 +61,9 @@ public class GeneratorConfig{
     public final static String PASSWORD = "123456";
     //postgresql数据库访问模块
     public final static String SCHEMA_NAME = "public";
+    //数据库表映射到实体的命名策略
+    public final static NamingStrategy NAMING = NamingStrategy.underline_to_camel;
+    //数据库表字段映射到实体的命名策略
+    public final static NamingStrategy COLUMN_NAMING = NamingStrategy.underline_to_camel;
     //endregion
 }

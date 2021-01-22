@@ -1,5 +1,7 @@
 package com.berg.generator.system;
 
+import com.baomidou.mybatisplus.annotation.DbType;
+import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.berg.generator.AbstractGenerator;
 import com.berg.generator.AutoGenerator;
 import com.berg.generator.config.*;
@@ -7,6 +9,9 @@ import com.berg.generator.config.rules.NamingStrategy;
 import com.berg.generator.engine.FreemarkerTemplateEngine;
 import com.berg.generator.system.config.GeneratorConfig;
 
+/**
+ * EditVo生成
+ */
 public class EditVoGenerator extends AbstractGenerator {
 
     /**
@@ -33,12 +38,12 @@ public class EditVoGenerator extends AbstractGenerator {
         dsc.setDriverName(GeneratorConfig.DRIVER_NAME);
         dsc.setUsername(GeneratorConfig.USER_NAME);
         dsc.setPassword(GeneratorConfig.PASSWORD);
-        if (GeneratorConfig.DRIVER.equals("postgresql")) {//postgresql使用
+        if (GeneratorConfig.DBTYPE == DbType.POSTGRE_SQL) {//postgresql使用
             dsc.setSchemaName(GeneratorConfig.SCHEMA_NAME);
         }
         // 包配置
         PackageConfig pc = new PackageConfig();
-        pc.setParent("com.berg.dao." + GeneratorConfig.PARENT_MODULE_NAME);
+        pc.setParent(GeneratorConfig.BASE_MODULE_NAME + StringPool.DOT + GeneratorConfig.PARENT_MODULE_NAME);
 
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
@@ -46,9 +51,9 @@ public class EditVoGenerator extends AbstractGenerator {
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         strategy.setEntityLombokModel(true);
         strategy.setChainModel(true);
-        strategy.setInclude(scanner("表名，多个英文逗号分割").split(","));
+        strategy.setInclude(scanner("表名，多个英文逗号分割").split(StringPool.COMMA));
         strategy.setControllerMappingHyphenStyle(true);
-        strategy.setTablePrefix(pc.getModuleName() + "_");
+        strategy.setTablePrefix(pc.getModuleName() + StringPool.UNDERSCORE);
         // 配置模板
         TemplateConfig templateConfig = new TemplateConfig();
         templateConfig.setEntity(null);

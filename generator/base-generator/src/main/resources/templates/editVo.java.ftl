@@ -31,7 +31,7 @@ public class ${table.editVoName} {
     @NotNull(message = "${field.comment}不能为空")
      </#if>
     </#if>
-    <#if field.propertyType=="String"><#-- 长度校验 -->
+    <#if field.propertyType=="String" && field.type!="text"><#-- 长度校验 -->
     <#assign size=field.type?replace("varchar(","")?replace(")","")/>
     @Size(max = ${size}, message = "${field.comment}长度不能超过${size}个字符")
     </#if>
