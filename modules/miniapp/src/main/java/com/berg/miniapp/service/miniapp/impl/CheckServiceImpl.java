@@ -2,7 +2,7 @@ package com.berg.miniapp.service.miniapp.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import com.berg.common.exception.FailException;
-import com.berg.miniapp.service.AbstractService;
+import com.berg.auth.miniapp.service.AbstractService;
 import com.berg.miniapp.service.miniapp.CheckService;
 import com.berg.vo.miniapp.in.MaMsgSecCheckInVo;
 import com.berg.wx.utils.WxMaUtil;

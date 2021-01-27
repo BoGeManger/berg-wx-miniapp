@@ -9,7 +9,7 @@ import com.berg.common.exception.FailException;
 import com.berg.dao.page.PageInfo;
 import com.berg.dao.system.sys.entity.FileTbl;
 import com.berg.dao.system.sys.service.FileTblDao;
-import com.berg.system.service.AbstractService;
+import com.berg.auth.system.service.AbstractService;
 import com.berg.system.service.system.FileService;
 import com.berg.vo.system.FilePathVo;
 import com.berg.vo.system.FileVo;

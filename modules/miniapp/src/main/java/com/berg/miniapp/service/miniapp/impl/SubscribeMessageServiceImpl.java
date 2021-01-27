@@ -6,7 +6,7 @@ import cn.binarywang.wx.miniapp.bean.WxMaSubscribeMessage;
 import cn.hutool.json.JSONUtil;
 import com.berg.common.constant.RedisKeyConstants;
 import com.berg.common.exception.FailException;
-import com.berg.miniapp.service.AbstractService;
+import com.berg.auth.miniapp.service.AbstractService;
 import com.berg.miniapp.service.miniapp.SubscribeMessageService;
 import com.berg.vo.miniapp.MaTemplateInfoVo;
 import com.berg.vo.miniapp.in.MaSendTemplateInVo;

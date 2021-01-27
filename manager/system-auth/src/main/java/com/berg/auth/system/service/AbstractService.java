@@ -1,4 +1,4 @@
-package com.berg.system.service;
+package com.berg.auth.system.service;
 
 import com.berg.auth.system.auth.AuthenticationUtil;
 import org.springframework.beans.factory.annotation.Autowired;

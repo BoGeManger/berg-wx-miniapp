@@ -4,7 +4,7 @@ import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaPhoneNumberInfo;
 import com.berg.common.exception.FailException;
 import com.berg.common.exception.ParamException;
-import com.berg.miniapp.service.AbstractService;
+import com.berg.auth.miniapp.service.AbstractService;
 import com.berg.miniapp.service.miniapp.UserService;
 import com.berg.vo.miniapp.in.MaSetUserInfoInVo;
 import com.berg.vo.miniapp.in.MaUserPhoneInVo;

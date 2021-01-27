@@ -8,7 +8,7 @@ import com.berg.auth.miniapp.constant.AuthConstants;
 import com.berg.dao.system.mb.entity.MaBindTbl;
 import com.berg.dao.system.mb.service.MaBindTblDao;
 import com.berg.common.exception.FailException;
-import com.berg.miniapp.service.AbstractService;
+import com.berg.auth.miniapp.service.AbstractService;
 import com.berg.miniapp.service.miniapp.LoginService;
 import com.berg.vo.miniapp.MaUserInfoVo;
 import com.berg.vo.miniapp.in.MaLoginInVo;

@@ -14,7 +14,7 @@ import com.berg.dao.system.sys.service.UserOrganizationTblDao;
 import com.berg.dao.system.sys.service.UserRoleTblDao;
 import com.berg.dao.system.sys.service.UserTblDao;
 import com.berg.dao.page.PageInfo;
-import com.berg.system.service.AbstractService;
+import com.berg.auth.system.service.AbstractService;
 import com.berg.system.service.system.UserService;
 import com.berg.vo.system.UserEditVo;
 import com.berg.vo.system.UserVo;

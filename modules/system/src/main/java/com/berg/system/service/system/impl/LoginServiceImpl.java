@@ -13,7 +13,7 @@ import com.berg.dao.system.sys.entity.UserTbl;
 import com.berg.dao.system.sys.service.ComponentTblDao;
 import com.berg.dao.system.sys.service.RoleTblDao;
 import com.berg.dao.system.sys.service.UserTblDao;
-import com.berg.system.service.AbstractService;
+import com.berg.auth.system.service.AbstractService;
 import com.berg.system.service.system.LoginService;
 import com.berg.vo.system.UserVo;
 import com.berg.vo.system.in.LoginInVo;

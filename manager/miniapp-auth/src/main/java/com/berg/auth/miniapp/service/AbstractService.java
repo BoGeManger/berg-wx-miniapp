@@ -1,4 +1,4 @@
-package com.berg.miniapp.service;
+package com.berg.auth.miniapp.service;
 
 import com.berg.auth.miniapp.auth.AuthenticationUtil;
 import com.berg.vo.miniapp.MaUserInfoVo;

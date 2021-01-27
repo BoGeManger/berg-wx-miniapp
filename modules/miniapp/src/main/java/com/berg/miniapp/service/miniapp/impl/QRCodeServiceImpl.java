@@ -4,7 +4,7 @@ import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaCodeLineColor;
 import cn.hutool.json.JSONUtil;
 import com.berg.common.exception.FailException;
-import com.berg.miniapp.service.AbstractService;
+import com.berg.auth.miniapp.service.AbstractService;
 import com.berg.miniapp.service.miniapp.QRCodeService;
 import com.berg.vo.miniapp.in.MaCreateQRCodeInVo;
 import com.berg.vo.miniapp.in.MaQRCodeGetInVo;
