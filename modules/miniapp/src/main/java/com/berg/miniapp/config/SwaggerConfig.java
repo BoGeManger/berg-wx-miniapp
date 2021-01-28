@@ -59,7 +59,7 @@ public class SwaggerConfig {
         pars.add(ticketPar.build());
         pars.add(ticketPar1.build());
         return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo("小程序接口文档"))
+                .apiInfo(apiInfo("miniapp接口文档"))
                 .select()
                 .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
                 .paths(PathSelectors.any())

@@ -86,7 +86,7 @@ spring:
         acknowledge-mode: manual
 
 mybatis-plus:
-  mapper-locations: classpath:/system/mapper/**/*.xml,classpath:/log/mapper/*.xml
+  mapper-locations: classpath:/system/mapper/**/*.xml
   global-config:
     banner: false
   configuration:

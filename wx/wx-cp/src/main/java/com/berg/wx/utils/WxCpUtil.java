@@ -10,21 +10,21 @@ import java.util.Map;
 
 public class WxCpUtil {
 
-    public static Map<Integer, WxCpService> services = new HashMap<>();
-    public static Map<Integer, WxCpMessageRouter> routers = new HashMap<>();
+    public static Map<String, WxCpService> services = new HashMap<>();
+    public static Map<String, WxCpMessageRouter> routers = new HashMap<>();
 
-    public static WxCpService getService(Integer agentid) throws WxCpException {
-        WxCpService wxService = services.get(agentid);
+    public static WxCpService getService(String corpId) throws WxCpException {
+        WxCpService wxService = services.get(corpId);
         if (wxService == null) {
-            throw new WxCpException("获取微信WxCpService失败,未找到对应的企业微信应用agentid:"+agentid);
+            throw new WxCpException("获取微信WxCpService失败,未找到对应的企业微信应用corpId:"+corpId);
         }
         return wxService;
     }
 
-    public static WxCpMessageRouter getRouter(Integer agentid) throws WxCpException{
-        WxCpMessageRouter route = routers.get(agentid);
+    public static WxCpMessageRouter getRouter(String corpId) throws WxCpException{
+        WxCpMessageRouter route = routers.get(corpId);
         if (route == null) {
-            throw new WxCpException("获取微信WxCpMessageRouter失败,未找到对应的企业微信应用agentid:"+agentid);
+            throw new WxCpException("获取微信WxCpMessageRouter失败,未找到对应的企业微信应用corpId:"+corpId);
         }
         return route;
     }

@@ -50,10 +50,10 @@ public class WxCpConfig {
                     WxCpService service = new WxCpServiceImpl();
                     service.setWxCpConfigStorage(config);
                     if(wxCpMessageRouterService!=null){
-                        WxCpUtil.routers.put(a.getAgentId(),wxCpMessageRouterService.createRouter(service));
+                        WxCpUtil.routers.put(a.getCorpId(),wxCpMessageRouterService.createRouter(service));
                     }
                     return service;
-                }).collect(Collectors.toMap(s -> s.getWxCpConfigStorage().getAgentId(), a -> a));
+                }).collect(Collectors.toMap(s -> s.getWxCpConfigStorage().getCorpId(), a -> a));
     }
 
     WxCpDefaultConfigImpl wxCpRedisTemplateConfigStorage() {
