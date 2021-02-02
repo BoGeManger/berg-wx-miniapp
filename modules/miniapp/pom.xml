@@ -72,7 +72,7 @@
             </resource>
 
             <resource>
-                <directory>src/main/resources</directory>
+                <directory>${package.environment}</directory>
                 <filtering>true</filtering>
                 <includes>
                     <include>bootstrap.yml</include>
