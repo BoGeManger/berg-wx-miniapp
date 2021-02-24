@@ -24,12 +24,12 @@ public class CheckController extends AbstractController {
     @ApiOperation(value = "校验图片是否含有违法违规内容")
     @PostMapping(value = "imgSecCheck",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Result<Boolean> imgSecCheck(@ApiParam(value = "文件",required = true) @RequestPart(value = "file") MultipartFile file){
-        return getSuccessResult("请求成功",checkService.imgSecCheck(file));
+        return success("请求成功",()->checkService.imgSecCheck(file));
     }
 
     @ApiOperation(value = "校验文本是否含有违法违规内容")
     @PostMapping(value = "msgSecCheck")
     public Result<Boolean> msgSecCheck(@RequestBody @Validated MaMsgSecCheckInVo input){
-        return getSuccessResult("请求成功",checkService.msgSecCheck(input));
+        return success("请求成功",()->checkService.msgSecCheck(input));
     }
 }

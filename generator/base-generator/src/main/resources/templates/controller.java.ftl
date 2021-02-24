@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/${table.entityName}")
 @Api(tags = "${table.comment!}")
+@Validated
 public class ${table.controllerName} extends AbstractController {
 
     @Autowired
@@ -32,32 +33,31 @@ public class ${table.controllerName} extends AbstractController {
 
     @ApiOperation("获取${table.comment!}分页列表")
     @GetMapping(value = "get${table.entityName}Page")
-    public Result<PageInfo<${table.voName}>> get${table.entityName}Page(@Validated ${table.pageInVoName} input) {
-        return getSuccessResult("请求成功", ${table.serviceNameVariable}.get${table.entityName}Page(input));
+    public Result<PageInfo<${table.voName}>> get${table.entityName}Page(${table.pageInVoName} input) {
+        return success("请求成功", ()->${table.serviceNameVariable}.get${table.entityName}Page(input));
     }
 
     @ApiOperation("获取${table.comment!}")
     @GetMapping(value = "get${table.entityName}")
     public Result<${table.editVoName}> get${table.entityName}(@ApiParam(value = "表id", required = true) @RequestParam Integer id) {
-        return getSuccessResult("请求成功", ${table.serviceNameVariable}.get${table.entityName}(id));
+        return success("请求成功", ()->${table.serviceNameVariable}.get${table.entityName}(id));
     }
 
     @ApiOperation("新增${table.comment!}")
     @PostMapping(value = "add${table.entityName}")
-    public Result<Integer> add${table.entityName}(@RequestBody @Validated ${table.editVoName} input) {
-        return getSuccessResult("请求成功", ${table.serviceNameVariable}.add${table.entityName}(input));
+    public Result<Integer> add${table.entityName}(@RequestBody ${table.editVoName} input) {
+        return success("请求成功", ()->${table.serviceNameVariable}.add${table.entityName}(input));
     }
 
     @ApiOperation("修改${table.comment!}")
     @PutMapping(value = "update${table.entityName}")
-    public Result<Integer> update${table.entityName}(@RequestBody @Validated ${table.editVoName} input) {
-        return getSuccessResult("请求成功", ${table.serviceNameVariable}.update${table.entityName}(input));
+    public Result<Integer> update${table.entityName}(@RequestBody ${table.editVoName} input) {
+        return success("请求成功", ()->${table.serviceNameVariable}.update${table.entityName}(input));
     }
 
     @ApiOperation("删除${table.comment!}")
     @DeleteMapping(value = "del${table.entityName}")
-    public Result<Boolean> del${table.entityName}(@RequestBody EntityIdVo<Integer> input) {
-        ${table.serviceNameVariable}.del${table.entityName}(input.getId());
-        return getSuccessResult("请求成功", true);
+    public Result<Void> del${table.entityName}(@RequestBody EntityIdVo<Integer> input) {
+        return success("请求成功", ()->${table.serviceNameVariable}.del${table.entityName}(input.getId()));
     }
 }

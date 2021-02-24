@@ -1,18 +1,11 @@
 package com.berg.common;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
+import javax.validation.*;
 import javax.validation.groups.Default;
 import java.util.Set;
 
 public class ValidatorUtil {
-
-
-    @Autowired
-    Validator globalValidator;
 
     public static ValidatorFactory getValidatorFactory() {
         return Validation.buildDefaultValidatorFactory();
@@ -34,10 +27,14 @@ public class ValidatorUtil {
     }
 
     /**
-     * 校验
+     * 校验并抛出异常
+     * @param entity
+     * @param <T>
      */
-    public static <T> Set<ConstraintViolation<T>> validator(T entity) {
+    public static <T> void validator(T entity){
         Set<ConstraintViolation<T>> constraintViolationSet = getConstraintViolationSet(entity);
-        return constraintViolationSet;
+        if (!CollectionUtils.isEmpty(constraintViolationSet)) {
+            throw new ConstraintViolationException(constraintViolationSet);
+        }
     }
 }

@@ -26,19 +26,18 @@ public class LoginController extends AbstractController {
     @ApiOperation(value = "小程序登录",notes = "前端未存在请求校验时调用,生成请求校验并返回最新用户信息")
     @PostMapping(value = "login")
     public Result<MaLoginOutVo> login(@RequestBody @Validated MaLoginInVo input){
-        return getSuccessResult("请求成功",loginService.login(input));
+        return success("请求成功",()->loginService.login(input));
     }
 
     @ApiOperation(value = "刷新请求校验",notes = "前端存在请求校验时调用,刷新请求校验并返回最新用户信息")
     @PostMapping(value = "refresh")
     public Result<MaLoginOutVo> refresh(@RequestBody @Validated MaRefreshInVo input){
-        return getSuccessResult("请求成功",loginService.refresh(input));
+        return success("请求成功",()->loginService.refresh(input));
     }
 
     @ApiOperation(value = "小程序退出登录",notes = "删除缓存请求校验")
     @PostMapping(value = "logout")
-    public Result<Boolean> logout(){
-        loginService.logout();
-        return getSuccessResult("请求成功",true);
+    public Result<Void> logout(){
+        return success("请求成功",()->loginService.logout());
     }
 }

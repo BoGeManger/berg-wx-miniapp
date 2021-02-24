@@ -5,9 +5,11 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.berg.vo.common.PageInVo;
 import com.berg.dao.page.PageInfo;
+import org.apache.ibatis.session.SqlSession;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
 public interface IService<T>  extends com.baomidou.mybatisplus.extension.service.IService<T>{
@@ -37,6 +39,8 @@ public interface IService<T>  extends com.baomidou.mybatisplus.extension.service
 
     boolean updateBatchById(Collection<T> entityList, int batchSize);
     //endregion
+
+    <E> boolean executeBatch(Collection<E> list, int batchSize, BiConsumer<SqlSession, E> consumer);
 
     boolean saveOrUpdateById(T entity);
 

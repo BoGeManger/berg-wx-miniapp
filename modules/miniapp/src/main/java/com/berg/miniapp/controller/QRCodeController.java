@@ -26,18 +26,18 @@ public class QRCodeController extends AbstractController {
     @ApiOperation(value = "获取小程序二维码",notes = "永久有效,有数量限制")
     @PostMapping(value = "createQRCode")
     public Result<byte[]> createQRCode(@RequestBody @Validated MaCreateQRCodeInVo input){
-        return getSuccessResult("请求成功",qrCodeService.createQRCode(input));
+        return success("请求成功",()->qrCodeService.createQRCode(input));
     }
 
     @ApiOperation(value = "获取小程序码",notes = "永久有效,有数量限制")
     @PostMapping(value = "get")
     public Result<byte[]> get(@RequestBody @Validated MaQRCodeGetInVo input){
-        return getSuccessResult("请求成功",qrCodeService.get(input));
+        return success("请求成功",()->qrCodeService.get(input));
     }
 
     @ApiOperation(value = "获取小程序码(场景)",notes = "永久有效,有数量限制")
     @PostMapping(value = "getUnlimited")
     public Result<byte[]> getUnlimited(@RequestBody @Validated MaQRCodeGetUnlimitedInVo input){
-        return getSuccessResult("请求成功",qrCodeService.getUnlimited(input));
+        return success("请求成功",()->qrCodeService.getUnlimited(input));
     }
 }

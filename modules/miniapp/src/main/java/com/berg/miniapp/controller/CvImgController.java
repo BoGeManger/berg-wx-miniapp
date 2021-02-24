@@ -25,18 +25,18 @@ public class CvImgController extends AbstractController {
     @ApiOperation(value = "图片智能裁剪")
     @PostMapping(value = "aiCrop",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Result<MaAiCropOutVo> aiCrop(@ApiParam(value = "文件",required = true) @RequestPart(value = "file") MultipartFile file){
-        return getSuccessResult("请求成功",cvImgService.aiCrop(file));
+        return success("请求成功",()->cvImgService.aiCrop(file));
     }
 
     @ApiOperation(value = "小程序的条码/二维码识别")
     @PostMapping(value = "scanQRCode",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Result<MaScanQRCodeOutVo> scanQRCode(@ApiParam(value = "文件",required = true) @RequestPart(value = "file") MultipartFile file){
-        return getSuccessResult("请求成功",cvImgService.scanQRCode(file));
+        return success("请求成功",()->cvImgService.scanQRCode(file));
     }
 
     @ApiOperation(value = "图片高清化")
     @PostMapping(value = "superresolution",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Result<MaSuperresolutionOutVo> superresolution(@ApiParam(value = "文件",required = true) @RequestPart(value = "file") MultipartFile file){
-        return getSuccessResult("请求成功",cvImgService.superresolution(file));
+        return success("请求成功",()->cvImgService.superresolution(file));
     }
 }

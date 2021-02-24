@@ -34,16 +34,16 @@ public class Result<T> implements Serializable {
     @JsonIgnore
     HttpStatus httpStatus;
 
-    public Result(String errorCode, String errorMsg, T data) {
-        this.code = errorCode;
-        this.message = errorMsg;
+    public Result(String code, String message, T data) {
+        this.code = code;
+        this.message = message;
         this.data = data;
         this.httpStatus = HttpStatus.OK;
     }
 
-    public Result(String errorCode, String errorMsg, T data,HttpStatus httpStatus) {
-        this.code = errorCode;
-        this.message = errorMsg;
+    public Result(String code, String message, T data,HttpStatus httpStatus) {
+        this.code = code;
+        this.message = message;
         this.data = data;
         this.httpStatus = httpStatus;
     }

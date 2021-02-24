@@ -26,31 +26,30 @@ public class RoleController  extends AbstractController {
     @ApiOperation("获取角色分页列表")
     @GetMapping(value = "getRolePage")
     public Result<PageInfo<RoleVo>> getRolePage(@Validated GetRolePageInVo input){
-        return getSuccessResult("请求成功",roleService.getRolePage(input));
+        return success("请求成功",()->roleService.getRolePage(input));
     }
 
     @ApiOperation("获取角色")
     @GetMapping(value = "getRole")
     public Result<RoleEditVo> getRole(@ApiParam(value = "表id",required = true) @RequestParam Integer id){
-        return getSuccessResult("请求成功",roleService.getRole(id));
+        return success("请求成功",()->roleService.getRole(id));
     }
 
     @ApiOperation("新增角色")
     @PostMapping(value = "addRole")
     public Result<Integer> addRole(@RequestBody @Validated RoleEditVo input){
-        return getSuccessResult("请求成功",roleService.addRole(input));
+        return success("请求成功",()->roleService.addRole(input));
     }
 
     @ApiOperation("修改角色")
     @PutMapping(value = "updateRole")
     public Result<Integer> updateRole(@RequestBody @Validated RoleEditVo input){
-        return getSuccessResult("请求成功",roleService.updateRole(input));
+        return success("请求成功",()->roleService.updateRole(input));
     }
 
     @ApiOperation("删除角色")
     @DeleteMapping(value = "delRole")
-    public Result<Boolean> delRole(@RequestBody EntityIdVo<Integer> input){
-        roleService.delRole(input.getId());
-        return getSuccessResult("请求成功",true);
+    public Result<Void> delRole(@RequestBody EntityIdVo<Integer> input){
+        return success("请求成功",()->roleService.delRole(input.getId()));
     }
 }

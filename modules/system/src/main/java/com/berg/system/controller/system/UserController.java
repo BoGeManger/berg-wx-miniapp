@@ -27,52 +27,48 @@ public class UserController extends AbstractController {
     @ApiOperation("获取用户分页列表")
     @GetMapping(value = "getUserPage")
     public Result<PageInfo<UserVo>> getUserPage(@Validated GetUserPageInVo input){
-        return getSuccessResult("请求成功",userService.getUserPage(input));
+        return success("请求成功",()->userService.getUserPage(input));
     }
 
     @ApiOperation("获取用户")
     @GetMapping(value = "getUser")
     public Result<UserEditVo> getUser(@ApiParam(value = "表id",required = true) @RequestParam Integer id){
-        return getSuccessResult("请求成功",userService.getUser(id));
+        return success("请求成功",()->userService.getUser(id));
     }
 
     @ApiOperation("新增用户")
     @PostMapping(value = "addUser")
     public Result<Integer> addUser(@RequestBody @Validated UserEditVo input){
-        return getSuccessResult("请求成功", userService.addUser(input));
+        return success("请求成功", ()->userService.addUser(input));
     }
 
     @ApiOperation("修改用户")
     @PutMapping(value = "updateUser")
     public Result<Integer> updateUser(@RequestBody @Validated UserEditVo input){
-        return getSuccessResult("请求成功",userService.updateUser(input));
+        return success("请求成功",()->userService.updateUser(input));
     }
 
     @ApiOperation("删除用户")
     @DeleteMapping(value = "delUser")
-    public Result<Boolean> delUser(@RequestBody EntityIdVo<Integer> input){
-        userService.delUser(input.getId());
-        return getSuccessResult("请求成功",true);
+    public Result<Void> delUser(@RequestBody EntityIdVo<Integer> input){
+        return success("请求成功",()->userService.delUser(input.getId()));
     }
 
     @ApiOperation("锁定用户")
     @PutMapping(value = "lockUser")
-    public Result<Boolean> lockUser(@RequestBody EntityIdVo<Integer> input){
-        userService.lockUser(input.getId());
-        return getSuccessResult("请求成功",true);
+    public Result<Void> lockUser(@RequestBody EntityIdVo<Integer> input){
+        return success("请求成功",()->userService.lockUser(input.getId()));
     }
 
     @ApiOperation("解锁用户")
     @PutMapping(value = "unlockUser")
-    public Result<Boolean> unlockUser(@RequestBody EntityIdVo<Integer> input){
-        userService.unlockUser(input.getId());
-        return getSuccessResult("请求成功",true);
+    public Result<Void> unlockUser(@RequestBody EntityIdVo<Integer> input){
+        return success("请求成功",()->userService.unlockUser(input.getId()));
     }
 
     @ApiOperation("更新用户密码")
     @PutMapping(value = "updatePassword")
-    public Result<Boolean> updatePassword(@RequestBody @Validated UpdatePasswordInVo input){
-        userService.updatePassword(input);
-        return getSuccessResult("请求成功",true);
+    public Result<Void> updatePassword(@RequestBody @Validated UpdatePasswordInVo input){
+        return success("请求成功",()->userService.updatePassword(input));
     }
 }

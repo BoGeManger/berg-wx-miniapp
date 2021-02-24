@@ -24,13 +24,12 @@ public class SubscribeMessageController extends AbstractController {
     @ApiOperation(value = "获取当前帐号下的个人模板列表")
     @GetMapping(value = "getTemplateList")
     public Result<List<MaTemplateInfoVo>> getTemplateList(){
-        return getSuccessResult("请求成功",subscribeMessageService.getTemplateList());
+        return success("请求成功",()->subscribeMessageService.getTemplateList());
     }
 
     @ApiOperation(value = "发送订阅消息")
     @PostMapping(value = "send")
-    public Result<Boolean> send(@RequestBody @Validated MaSendTemplateInVo input){
-        subscribeMessageService.send(input);
-        return getSuccessResult("请求成功",true);
+    public Result<Void> send(@RequestBody @Validated MaSendTemplateInVo input){
+        return success("请求成功",()->subscribeMessageService.send(input));
     }
 }

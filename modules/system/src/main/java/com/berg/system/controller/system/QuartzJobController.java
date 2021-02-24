@@ -26,39 +26,36 @@ public class QuartzJobController extends AbstractController {
     @ApiOperation("获取定时任务分页")
     @GetMapping(value = "getJobPage")
     public Result<PageInfo<JobVo>> getJobPage(@Validated GetJobPageInVo input){
-        return getSuccessResult("请求成功",quartzJobService.getJobPage(input));
+        return success("请求成功",()->quartzJobService.getJobPage(input));
     }
 
     @ApiOperation("获取定时任务")
     @GetMapping(value = "getJob")
     public Result<JobEditVo> getJob(@ApiParam(value = "表id",required = true) @RequestParam Integer id){
-        return getSuccessResult("请求成功",quartzJobService.getJob(id));
+        return success("请求成功",()->quartzJobService.getJob(id));
     }
 
     @ApiOperation("新增定时任务")
     @PostMapping(value = "addJob")
     public Result<Integer> addJob(@RequestBody @Validated JobEditVo input){
-        return getSuccessResult("请求成功", quartzJobService.addJob(input));
+        return success("请求成功", ()->quartzJobService.addJob(input));
     }
 
     @ApiOperation("删除定时任务")
     @DeleteMapping(value = "delJob")
-    public Result<Boolean> delJob(@RequestBody EntityIdVo<Integer> input){
-        quartzJobService.delJob(input.getId());
-        return getSuccessResult("请求成功",true);
+    public Result<Void> delJob(@RequestBody EntityIdVo<Integer> input){
+        return success("请求成功",()->quartzJobService.delJob(input.getId()));
     }
 
     @ApiOperation("暂停定时任务")
     @PutMapping(value = "pauseJob")
-    public Result<Boolean> pauseJob(@RequestBody EntityIdVo<Integer> input){
-        quartzJobService.pauseJob(input.getId());
-        return getSuccessResult("请求成功",true);
+    public Result<Void> pauseJob(@RequestBody EntityIdVo<Integer> input){
+        return success("请求成功",()->quartzJobService.pauseJob(input.getId()));
     }
 
     @ApiOperation("启动定时任务")
     @PutMapping(value = "resumeJob")
-    public Result<Boolean> resumeJob(@RequestBody EntityIdVo<Integer> input){
-        quartzJobService.resumeJob(input.getId());
-        return getSuccessResult("请求成功",true);
+    public Result<Void> resumeJob(@RequestBody EntityIdVo<Integer> input){
+        return success("请求成功",()->quartzJobService.resumeJob(input.getId()));
     }
 }

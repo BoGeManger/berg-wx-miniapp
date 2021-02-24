@@ -25,32 +25,31 @@ public class OrganizationController extends AbstractController {
     @ApiOperation("获取组织树形列表")
     @GetMapping(value = "getOrganizationTree")
     public Result<ListVo<OrganizationTreeVo>> getOrganizationTree(){
-        return getSuccessResult("请求成功",organizationService.getOrganizationTree());
+        return success("请求成功",()->organizationService.getOrganizationTree());
     }
 
     @ApiOperation("获取组织")
     @GetMapping(value = "getOrganization")
     public Result<OrganizationEditVo> getOrganization(@ApiParam(value = "表id",required = true) @RequestParam Integer id){
-        return getSuccessResult("请求成功",organizationService.getOrganization(id));
+        return success("请求成功",()->organizationService.getOrganization(id));
     }
 
     @ApiOperation("新增组织")
     @PostMapping(value = "addOrganization")
     public Result<Integer> addOrganization(@RequestBody @Validated OrganizationEditVo input){
-        return getSuccessResult("请求成功",organizationService.addOrganization(input));
+        return success("请求成功",()->organizationService.addOrganization(input));
     }
 
     @ApiOperation("修改组织")
     @PutMapping(value = "updateOrganization")
     public Result<Integer> updateOrganization(@RequestBody @Validated OrganizationEditVo input){
-        return getSuccessResult("请求成功",organizationService.updateOrganization(input));
+        return success("请求成功",()->organizationService.updateOrganization(input));
     }
 
     @ApiOperation("批量操作组织(新增,修改,删除)")
     @PostMapping(value = "operatorBatchOrganization")
-    public Result<Boolean> operatorBatchOrganization(@RequestBody @Validated OperatorBatchOrganizationInVo input){
-        organizationService.operatorBatchOrganization(input);
-        return getSuccessResult("请求成功",true);
+    public Result<Void> operatorBatchOrganization(@RequestBody @Validated OperatorBatchOrganizationInVo input){
+        return success("请求成功",()->organizationService.operatorBatchOrganization(input));
     }
 
 }

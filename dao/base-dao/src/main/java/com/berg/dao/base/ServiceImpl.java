@@ -6,16 +6,14 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.enums.SqlMethod;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
-import com.baomidou.mybatisplus.core.toolkit.Assert;
-import com.baomidou.mybatisplus.core.toolkit.Constants;
-import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.baomidou.mybatisplus.core.toolkit.*;
 import com.berg.dao.page.PageHelper;
 import com.berg.vo.common.PageInVo;
 import com.github.pagehelper.Page;
 import com.berg.dao.page.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.binding.MapperMethod;
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.BeanUtils;
 
 import java.io.Serializable;
@@ -23,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
 @Slf4j
@@ -77,6 +76,30 @@ public abstract class ServiceImpl<M extends BaseMapper<T>, T> extends com.baomid
         });
     }
     //endregion
+
+    /**
+     * 执行批量操作
+     *
+     * @param list      数据集合
+     * @param batchSize 批量大小
+     * @param consumer  执行方法
+     * @param <E>       泛型
+     * @return 操作结果
+     */
+    public <E> boolean executeBatch(Collection<E> list, int batchSize, BiConsumer<SqlSession, E> consumer) {
+        Assert.isFalse(batchSize < 1, "batchSize must not be less than one");
+        return !CollectionUtils.isEmpty(list) && executeBatch(sqlSession -> {
+            int size = list.size();
+            int i = 1;
+            for (E element : list) {
+                consumer.accept(sqlSession, element);
+                if ((i % batchSize == 0) || i == size) {
+                    sqlSession.flushStatements();
+                }
+                i++;
+            }
+        });
+    }
 
     /**
      * 根据ID是否为0进行新增或修改

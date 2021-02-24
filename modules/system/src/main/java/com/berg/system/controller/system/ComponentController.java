@@ -29,51 +29,49 @@ public class ComponentController extends AbstractController {
     @ApiOperation("获取组件树形列表")
     @GetMapping(value = "getComTree")
     public Result<ListVo<ComponentTreeVo>> getComTree(){
-        return getSuccessResult("请求成功",componentService.getComTree());
+        return success("请求成功",()->componentService.getComTree());
     }
 
     @ApiOperation("根据用户获取组件树形列表")
     @GetMapping(value = "getComTreeByUser")
     public Result<ListVo<ComponentTreeVo>> getComTreeByUser(){
-        return getSuccessResult("请求成功",componentService.getComTreeByUser());
+        return success("请求成功",()->componentService.getComTreeByUser());
     }
 
     @ApiOperation("获取组件分页列表")
     @GetMapping(value = "getComPage")
     public Result<PageInfo<ComponentVo>> getComPage(@Validated GetComPageInVo input){
-        return getSuccessResult("请求成功",componentService.getComPage(input));
+        return success("请求成功",()->componentService.getComPage(input));
     }
 
     @ApiOperation("获取组件")
     @GetMapping(value = "getCom")
     public Result<ComponentEditVo> getCom(@ApiParam(value = "表id",required = true) @RequestParam Integer id){
-        return getSuccessResult("请求成功",componentService.getCom(id));
+        return success("请求成功",()->componentService.getCom(id));
     }
 
     @ApiOperation("新增组件")
     @PostMapping(value = "addCom")
     public Result<Integer> addCom(@RequestBody @Validated ComponentEditVo input){
-        return getSuccessResult("请求成功",componentService.addCom(input));
+        return success("请求成功",()->componentService.addCom(input));
     }
 
     @ApiOperation("修改组件")
     @PutMapping(value = "updateCom")
     public Result<Integer> updateCom(@RequestBody @Validated ComponentEditVo input){
-        return getSuccessResult("请求成功",componentService.updateCom(input));
+        return success("请求成功",()->componentService.updateCom(input));
     }
 
     @ApiOperation("删除组件")
     @PutMapping(value = "delCom")
-    public Result<Boolean> delCom(@RequestBody @Validated EntityIdVo<Integer> input){
-        componentService.delCom(input.getId());
-        return getSuccessResult("请求成功",true);
+    public Result<Void> delCom(@RequestBody @Validated EntityIdVo<Integer> input){
+        return success("请求成功",()->componentService.delCom(input.getId()));
     }
 
 //    @ApiOperation("批量操作组件(新增,修改,删除)")
 //    @PostMapping(value = "operatorBatchCom")
-//    public Result<Boolean> operatorBatchCom(@RequestBody @Validated OperatorBatchComInVo input){
-//        componentService.operatorBatchCom(input);
-//        return getSuccessResult("请求成功",true);
+//    public Result<Void> operatorBatchCom(@RequestBody @Validated OperatorBatchComInVo input){
+//        return success("请求成功",()->componentService.operatorBatchCom(input));
 //    }
 
 }

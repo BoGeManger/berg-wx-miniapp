@@ -24,13 +24,12 @@ public class SubscribeMessageController extends AbstractController {
     @ApiOperation("获取模板消息发送记录分页列表")
     @GetMapping(value = "getMsgRecordPage")
     public Result<PageInfo<MsgRecordVo>> getMsgRecordPage(@Validated GetMsgRecordPageInVo input){
-        return getSuccessResult("请求成功",subscribeMessageService.getMsgRecordPage(input));
+        return success("请求成功",()->subscribeMessageService.getMsgRecordPage(input));
     }
 
     @ApiOperation("删除模板缓存")
     @DeleteMapping(value = "delTemplateCache")
-    public Result<Boolean> delTemplateCache(@RequestBody MaDelTemplateCacheInVo input){
-        subscribeMessageService.delTemplateCache(input.getAppId());
-        return getSuccessResult("请求成功",true);
+    public Result<Void> delTemplateCache(@RequestBody MaDelTemplateCacheInVo input){
+        return success("请求成功",()->subscribeMessageService.delTemplateCache(input.getAppId()));
     }
 }

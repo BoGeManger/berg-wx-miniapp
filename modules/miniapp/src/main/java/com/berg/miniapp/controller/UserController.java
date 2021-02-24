@@ -26,13 +26,12 @@ public class UserController extends AbstractController {
     @ApiOperation(value = "获取用户手机号码",notes = "获取用户手机号码并注册,可重新调用refresh重新生成请求校验保证用户信息为最新")
     @PostMapping(value = "phone")
     public Result<MaUserPhoneOutVo> phone(@RequestBody @Validated MaUserPhoneInVo input){
-        return getSuccessResult("请求成功",userService.phone(input));
+        return success("请求成功",()->userService.phone(input));
     }
 
     @ApiOperation(value = "保存用户信息",notes = "可重新调用refresh重新生成请求校验保证用户信息为最新")
     @PostMapping(value = "setUserInfo")
-    public Result<Boolean> setUserInfo(@RequestBody @Validated MaSetUserInfoInVo input){
-        userService.setUserInfo(input);
-        return getSuccessResult("请求成功",true);
+    public Result<Void> setUserInfo(@RequestBody @Validated MaSetUserInfoInVo input){
+        return success("请求成功",()->userService.setUserInfo(input));
     }
 }
