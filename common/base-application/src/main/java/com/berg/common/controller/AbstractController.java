@@ -18,7 +18,7 @@ public abstract class AbstractController {
      * @param msg
      * @return
      */
-    public Result customize(String code, String msg) {
+    public Result<Void> customize(String code, String msg) {
         return new Result(code, msg, null);
     }
 
@@ -80,7 +80,7 @@ public abstract class AbstractController {
      * @param msg
      * @return
      */
-    public Result success(String msg) {
+    public Result<Void> success(String msg) {
         return customize(MessageConstants.SYSTEM_SUCESS_CODE, msg);
     }
 
