@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.enums.SqlMethod;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
 import com.baomidou.mybatisplus.core.toolkit.*;
+import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import com.berg.dao.page.PageHelper;
 import com.berg.vo.common.PageInVo;
 import com.github.pagehelper.Page;
@@ -14,6 +15,7 @@ import com.berg.dao.page.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.binding.MapperMethod;
 import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.BeanUtils;
 
 import java.io.Serializable;
@@ -76,6 +78,14 @@ public abstract class ServiceImpl<M extends BaseMapper<T>, T> extends com.baomid
         });
     }
     //endregion
+
+    /**
+     * 获取SqlSessionFactory
+     * @return
+     */
+    public SqlSessionFactory getSqlSessionFactory(){
+        return SqlHelper.sqlSessionFactory(entityClass);
+    }
 
     /**
      * 执行批量操作

@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.berg.vo.common.PageInVo;
 import com.berg.dao.page.PageInfo;
 import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 
 import java.util.Collection;
 import java.util.List;
@@ -40,6 +41,8 @@ public interface IService<T>  extends com.baomidou.mybatisplus.extension.service
     boolean updateBatchById(Collection<T> entityList, int batchSize);
     //endregion
 
+    SqlSessionFactory getSqlSessionFactory();
+
     <E> boolean executeBatch(Collection<E> list, int batchSize, BiConsumer<SqlSession, E> consumer);
 
     boolean saveOrUpdateById(T entity);
@@ -52,6 +55,7 @@ public interface IService<T>  extends com.baomidou.mybatisplus.extension.service
 
     <E> E getById(java.io.Serializable id,Class<E> cls);
 
+    @Deprecated
     <E> E getOne(Wrapper<T> queryWrapper,Class<E> cls);
 
     T getOneLimit(QueryWrapper<T> queryWrapper);
