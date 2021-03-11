@@ -19,7 +19,7 @@ public class SpringUtil implements ApplicationContextAware {
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) {
-        SpringUtil.applicationContext = applicationContext;
+        this.applicationContext = applicationContext;
     }
 
     /**
@@ -74,7 +74,6 @@ public class SpringUtil implements ApplicationContextAware {
      * @param reference 类型参考，用于持有转换后的泛型类型
      * @param <T>       Bean类型
      * @return 带泛型参数的Bean
-     * @since 5.4.0
      */
     @SuppressWarnings("unchecked")
     public static <T> T getBean(TypeReference<T> reference) {
@@ -91,7 +90,6 @@ public class SpringUtil implements ApplicationContextAware {
      * @param <T>  Bean类型
      * @param type 类、接口，null表示获取所有bean
      * @return 类型对应的bean，key是bean注册的name，value是Bean
-     * @since 5.3.3
      */
     public static <T> Map<String, T> getBeansOfType(Class<T> type) {
         return applicationContext.getBeansOfType(type);
@@ -102,7 +100,6 @@ public class SpringUtil implements ApplicationContextAware {
      *
      * @param type 类、接口，null表示获取所有bean名称
      * @return bean名称
-     * @since 5.3.3
      */
     public static String[] getBeanNamesForType(Class<?> type) {
         return applicationContext.getBeanNamesForType(type);
@@ -113,7 +110,6 @@ public class SpringUtil implements ApplicationContextAware {
      *
      * @param key 配置项key
      * @return 属性值
-     * @since 5.3.3
      */
     public static String getProperty(String key) {
         return applicationContext.getEnvironment().getProperty(key);
@@ -123,7 +119,6 @@ public class SpringUtil implements ApplicationContextAware {
      * 获取当前的环境配置，无配置返回null
      *
      * @return 当前的环境配置
-     * @since 5.3.3
      */
     public static String[] getActiveProfiles() {
         return applicationContext.getEnvironment().getActiveProfiles();
@@ -133,11 +128,18 @@ public class SpringUtil implements ApplicationContextAware {
      * 获取当前的环境配置，当有多个环境配置时，只获取第一个
      *
      * @return 当前的环境配置
-     * @since 5.3.3
      */
     public static String getActiveProfile() {
         final String[] activeProfiles = getActiveProfiles();
         return ArrayUtil.isNotEmpty(activeProfiles) ? activeProfiles[0] : null;
+    }
+
+    /**
+     * 获取所有Bean名称
+     * @return 所有Bean名称
+     */
+    public static String[] getBeanDefinitionNames(){
+        return applicationContext.getBeanDefinitionNames();
     }
 
     /**
@@ -148,8 +150,6 @@ public class SpringUtil implements ApplicationContextAware {
      * @param <T>      Bean类型
      * @param beanName 名称
      * @param bean     bean
-     * @author shadow
-     * @since 5.4.2
      */
     public static <T> void registerBean(String beanName, T bean) {
         ConfigurableApplicationContext context = (ConfigurableApplicationContext) applicationContext;
