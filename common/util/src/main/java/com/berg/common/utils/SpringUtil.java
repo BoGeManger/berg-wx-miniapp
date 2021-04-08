@@ -152,7 +152,10 @@ public class SpringUtil implements ApplicationContextAware {
      * @param bean     bean
      */
     public static <T> void registerBean(String beanName, T bean) {
-        ConfigurableApplicationContext context = (ConfigurableApplicationContext) applicationContext;
-        context.getBeanFactory().registerSingleton(beanName, bean);
+        ConfigurableApplicationContext configurableApplicationContext = (ConfigurableApplicationContext) applicationContext;
+        BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(bean.getClass());
+        BeanDefinitionRegistry beanDefinitionRegistry = (BeanDefinitionRegistry) configurableApplicationContext.getBeanFactory();
+        beanDefinitionRegistry.registerBeanDefinition(beanName, beanDefinitionBuilder.getRawBeanDefinition());
+        configurableApplicationContext.getBeanFactory().registerSingleton(beanName,bean);
     }
 }
